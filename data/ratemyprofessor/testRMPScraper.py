@@ -2,6 +2,9 @@ import requests
 import json
 import math
 import pickle
+import numpy as np
+import matplotlib
+
 
 #Adapted from https://github.com/Rodantny/Rate-My-Professor-Scraper-and-Search
 class RateMyProfScraper:
@@ -35,10 +38,9 @@ class RateMyProfScraper:
                               'remaining'] + 20  # get the number of professors at William Paterson University
             return num_of_prof
 
-        def GetRMPProfessorJSON(self, tid):
-            page = requests.get("https://www.ratemyprofessors.com/ShowRatings.jsp?tid=" + str(tid), timeout=10)
-            json_page = json.loads(page.content.decode('utf-8'))
-            print(json_page)
+        def GetRMPProfessorPageContents(self, tid):
+            page = requests.get("http://www.ratemyprofessors.com/ShowRatings.jsp?tid=" + str(tid))
+            return page.content
 
         def SearchProfessor(self, ProfessorName):
             self.indexnumber = self.GetProfessorIndex(ProfessorName)
@@ -72,14 +74,61 @@ class RateMyProfScraper:
 #CornellUniversity = RateMyProfScraper(298)
 #pickle.dump(CornellUniversity, open( "raw_rateMyProfessor_data.p", "wb" ))
 
-CornellUniversity = pickle.load(open("raw_rateMyProfessor_data.p", "rb"))
-#print(CornellUniversity.professorlist[0])
-cardie_index = CornellUniversity.SearchProfessor("Claire Cardie")
-tid = CornellUniversity.GetProfessorTID(cardie_index)
-print(cardie_index)
-print(tid)
-CornellUniversity.GetRMPProfessorJSON(tid)
-#CornellUniversity.PrintProfessorInfo()
-#CornellUniversity.PrintProfessorDetail(CornellUniversity.indexnumber)
-#CornellUniversity.PrintProfessorDetail("overall_rating")
+if __name__ == "__main__":
+    CornellUniversity = pickle.load(open("raw_rateMyProfessor_data.p", "rb"))
+    #print(CornellUniversity.professorlist[0])
+    cardie_index = CornellUniversity.SearchProfessor("Claire Cardie")
+    #tid = CornellUniversity.GetProfessorTID(cardie_index)
+    print(cardie_index)
+    #print(tid) #521940
+    #CornellUniversity.GetRMPProfessorJSON(tid)
+    #cardie_content = CornellUniversity.GetRMPProfessorPageContents(521940)
+    #print(cardie_content)
+    #pruneProfReviewFile(cardie_content)
+    #CornellUniversity.PrintProfessorInfo()
+    #CornellUniversity.PrintProfessorDetail(CornellUniversity.indexnumber)
+    #CornellUniversity.PrintProfessorDetail("overall_rating")
+
+    print(CornellUniversity.professorlist[352])
+    ratings = []
+    #0-5, 6-10, 11-25, 26-50, 51-100, > 100
+    numComments = [0, 0, 0, 0, 0, 0]
+    sum_comments = 0
+    sum_ratings = 0
+    num_w_ratings = 0
+    for i in range(len(CornellUniversity.professorlist)):
+        prof = CornellUniversity.professorlist[i]
+        rating = prof['overall_rating']
+        comments = prof['tNumRatings']
+        sum_comments += comments
+        if comments < 6:
+            numComments[0] += 1
+        elif comments < 11:
+            numComments[1] += 1
+        elif comments < 26:
+            numComments[2] += 1
+        elif comments < 51:
+            numComments[3] += 1
+        elif comments < 101:
+            numComments[4] += 1
+        else:
+            numComments[5] += 1
+
+        if rating != 'N/A':
+            num_w_ratings += 1
+            sum_ratings += float(rating)
+            ratings.append(rating)
+        #numComments.append(comments)
+    #print(ratings)
+    #print(numComments)
+    print(sum_comments / 2602)
+    print(sum_ratings / num_w_ratings)
+
+    #plt = matplotlib.pyplot
+
+
+
+    #[0, 110, 337, 669, 1297, 189]
+
+        
 
