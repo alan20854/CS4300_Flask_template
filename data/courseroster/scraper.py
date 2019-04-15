@@ -2,7 +2,9 @@ from urllib import request
 import json
 import csv
 import pickle
-
+engineering_subs = ['AEP', 'BME', 'CHEME', 'CEE', 'CS', 'EAS', 
+'ECE', 'ENGRC', 'ENGRD', 'ENGRG', 'ENGRI', 'INFO', 'MSE', 'MAE',
+'NSE', 'ORIE', 'STSCI', 'SYSEN']
 
 def scrape(roster="SP19", subject="CS"):
   """
@@ -82,9 +84,10 @@ def get_class_names(json):
   """
   res = []
   for c in json['data']['classes']:
-    name = ""
-    name += c['subject'] + " " + c['catalogNbr'] + ": " + c["titleShort"]
-    res.append(name)
+    if c['description'] != None:
+      name = ""
+      name += c['subject'] + " " + c['catalogNbr'] + ": " + c["titleShort"]
+      res.append(name)
   return res
 
 
@@ -99,6 +102,14 @@ def get_subjects(roster = "SP19"):
   for sub in response['data']['subjects']:
     subjects.append(sub['value'])
   return subjects
+
+def get_EN_class_names(subjects):
+  names = []
+  for x in subjects:
+    data = scrape(subject=x)
+    names += get_class_names(data)
+  return names
+    
 
 print("Starting data collection")
 subjects = get_subjects()
@@ -115,16 +126,25 @@ print("Obtained subjects")
 
 new_json = scrape(subject="CS")
 class_names = get_class_names(new_json)
-print(class_names)
 with open('CS_course_names.p', 'wb') as f:
   pickle.dump(class_names, f)
+
+with open('en_course_names.p', 'wb') as f:
+  pickle.dump(get_EN_class_names(engineering_subs), f)
+
+en_json={}
+for sub in engineering_subs:
+  new_json = create_map(scrape(subject=sub))
+  en_json[sub] = new_json
+
+with open('en_json.txt', 'w') as output:
+  json.dump(en_json, output)
 
 full_json = {}
 for sub in subjects:  
   new_json = create_map(scrape(subject=sub))
   if sub == 'CS':
     cs_json = new_json
-
   full_json[sub] = new_json
 
 with open('full_json.txt', 'w') as output:
