@@ -34,7 +34,6 @@ def recommend_n_classes_for_class(class_id, n):
     course_number = split_course_id[1]
     index_for_class = course_numbers_for_eng_majors.index(class_id)
     similar_docs = model.docvecs.most_similar(str(index_for_class))
-    print(similar_docs)
     similar_docs_indices = [int(val[0]) for val in similar_docs]
     top_n_similar_docs_indices = similar_docs_indices[:n]
     
