@@ -1,6 +1,7 @@
 from urllib import request
 import json
 import csv
+import pickle
 
 
 def scrape(roster="SP19", subject="CS"):
@@ -25,7 +26,7 @@ def create_map(json):
   """
   Returns a list of dictionaries.
 
-  Professors is a set of professors for the course
+  Professors is a list of professors for the course
 
   Parameters:
     json - json object from scrape
@@ -61,7 +62,7 @@ def create_csv(classes):
   """
   Creates a csv file from the list classes
 
-  Professors is a set of professors for the course
+  Professors is a list of professors for the course
 
   Parameters:
     classes - list
@@ -71,6 +72,20 @@ def create_csv(classes):
     writer = csv.DictWriter(g, fieldnames=rows)
     for r in classes:
       writer.writerow(r)
+
+def get_class_names(json):
+  """
+  Returns the list of abbreviated course names with their numbers.
+
+  Parameters:
+    json - json object from scrape
+  """
+  res = []
+  for c in json['data']['classes']:
+    name = ""
+    name += c['subject'] + " " + c['catalogNbr'] + ": " + c["titleShort"]
+    res.append(name)
+  return res
 
 
 #https://classes.cornell.edu/api/2.0/config/subjects.json?roster=SP19
@@ -98,6 +113,12 @@ print("Obtained subjects")
 #   classes = create_map(data)
 #   create_csv(classes)
 
+new_json = scrape(subject="CS")
+class_names = get_class_names(new_json)
+print(class_names)
+with open('CS_course_names.p', 'wb') as f:
+  pickle.dump(class_names, f)
+
 full_json = {}
 for sub in subjects:  
   new_json = create_map(scrape(subject=sub))
@@ -112,9 +133,9 @@ with open('full_json.txt', 'w') as output:
 with open('cs_json.txt', 'w') as output:
   json.dump(cs_json, output)
 
+
 #make graph of num professors vs major
 #make graph of coursestaht have 0 description vs major
 #print 10 for CS
 #json for one course
-
 #figure out if crosslisted
