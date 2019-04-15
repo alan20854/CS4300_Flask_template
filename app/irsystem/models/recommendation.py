@@ -8,6 +8,12 @@ eng_representations_simple = pickle.load( open( "./app/irsystem/models/eng_repre
 with open("./data/courseroster/full_json.txt") as f:
     cornell_course_descriptions = json.load(f)
 
+# model= Doc2Vec.load("./d2v_just_description.model")
+# eng_representations_simple = pickle.load( open( "./eng_representations_just_descriptions.p", "rb" ))
+# #print(eng_representations_simple.keys())
+# with open("../../../data/courseroster/full_json.txt") as f:
+#     cornell_course_descriptions = json.load(f)
+
 eng_majors = ['BEE', 'BME', 'CHEME', 'CEE', 'CS', 'EAS','ECE', 'AEP', 'BEE', 'INFO', 'MSE', 'MAE', 'ORIE']
 course_numbers_to_description_map_for_eng_majors = {}
 for dept in eng_majors:
@@ -33,8 +39,8 @@ def recommend_n_classes_for_class(class_id, n):
     similar_classes = [course_numbers_for_eng_majors[int(val[0])] for val in similar_docs]
     top_n_similar_classes = similar_classes[:n]
     top_n_similar_classes_and_descriptions = [(similar_class, course_numbers_to_description_map_for_eng_majors[similar_class]) for similar_class in top_n_similar_classes]
-    return top_n_similar_classes_and_descriptions
+    return [x[0] for x in top_n_similar_classes_and_descriptions]
 
-print(recommend_n_classes_for_class('CS 3152', 5))
+print(recommend_n_classes_for_class('CS 3110', 5))
 
 
