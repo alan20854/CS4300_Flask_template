@@ -38,14 +38,29 @@
             <button type="submit" class="btn btn-info"> Go! </button>
         </form>
         <form class="form-inline global-search">
-        {% if data %}
+        <!--{% if data %}
             <h1>{{output_message}}</h1>
-            <!--{% for d in data %}  
+            {% for d in data %}  
                 <br>
                 <p>{{d}}</p>
-            {% endfor %}-->
-        {% endif %}
+            {% endfor %}
+            {% endif %}-->
+
         </form>
+        <div class="global-search">
+        {% if data %}
+            <h3>{{ output_message }}</h1>
+            <br>
+            <h3>Results</h3>
+        {% endif %}
+        </div>
+        <div class="search-results">
+            {% for k,v in data %}  
+                <br>
+                <p>{{k}}</p>
+                <p>{{v}}
+            {% endfor %}
+        </div>
     </body>
 
 </html>
