@@ -115,7 +115,7 @@ print("Obtained subjects")
 
 new_json = scrape(subject="CS")
 class_names = get_class_names(new_json)
-
+print(class_names)
 with open('CS_course_names.p', 'wb') as f:
   pickle.dump(class_names, f)
 
