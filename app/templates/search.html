@@ -29,10 +29,9 @@
             
             <div class="form-group">
                 <select id="class_input" type="text" name="search" form="classform" class="form-control">
-                  <option value="volvo">Volvo</option>
-                  <option value="saab">Saab</option>
-                  <option value="opel">Opel</option>
-                  <option value="audi">Audi</option>
+                    {% for course in cs_classes %}
+                        <option value="{{ course }}">{{ course }}</option>
+                    {% endfor %}
                 </select>
                 <!--<input id="input" type="text" name="search" class="form-control" placeholder="Class Taken"> -->
             </div>
