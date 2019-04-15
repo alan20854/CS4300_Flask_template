@@ -29,7 +29,7 @@
             
             <div class="form-group">
                 <select id="class_input" type="text" name="search" form="classform" class="form-control">
-                    {% for course in cs_classes %}
+                    {% for course in courses %}
                         <option value="{{ course }}">{{ course }}</option>
                     {% endfor %}
                 </select>
