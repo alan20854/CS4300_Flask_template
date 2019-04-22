@@ -17,7 +17,6 @@ def home():
 def search():
 	#query = request.args.get('search')
 	class_names = request.json
-	print(class_names)
 	if request.json:
 		class_names = request.json['class_name'].split(',')
 		tag_names = request.json['tag_name'].split(',')
@@ -29,18 +28,14 @@ def search():
 		if len(tag_names) == 1 and tag_names[0] == '':
 			tag_names = []
 
-		print(tag_names)
-		print(course_ids)
 		data = Tfidf_Recommendation.recommend_classes_for_class(course_ids, tag_names)
-		print(data)
-		print(len(data))
 		json_dict = {}
 		json_dict['recommendations'] = []
 		for i in data:
 			k, v = i
 			class_dict = {}
 			class_dict["course"] = k
-			class_dict["description"] = v['desc']
+			class_dict["description"] = v
 			json_dict['recommendations'].append(class_dict)
 		return(json.dumps(json_dict))
 
