@@ -22,14 +22,44 @@ p .courseResult {
 text-align:center;
 padding:10px;
 }
-.global-search .form-control {
-width:500px;
-}
+.global-search .form-control {}
 .global-search * {
 display:inline-block;
-margin-bottom:0;
 }
 }
+.dropdown-bar {
+width: 40% !important;
+max-width: 40% !important;
+}
+#search-inputs-flex-container {
+display: flex;
+flex-direction: row;
+flex-wrap: nowrap;
+justify-content: center;
+align-items: baseline;
+}
+#class-search {
+float: left;
+}
+
+#tag-search {
+float: left;
+}
+#search-button {
+border: 1px solid #000;
+}
+
+#results {
+}
+
+.course-result-div {
+margin: 0 auto;
+background-color:#f7f7f7;
+max-width:75%;
+width:50%;
+}
+
+input {  }
 .topcorner{
 position:absolute;
 top:2%;

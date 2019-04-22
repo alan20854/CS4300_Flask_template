@@ -21,10 +21,11 @@
 
 /* For the input bar*/
 .bootstrap-tagsinput {
-  width: 90% !important;
-  display: table-cell;
   vertical-align: middle;
-  margin-top: 300px !important;
+}
+
+.bootstrap-tagsinput input {
+  width: 400px !important;
 }
 
 /* For the magnifying */

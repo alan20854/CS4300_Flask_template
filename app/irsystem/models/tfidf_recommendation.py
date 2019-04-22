@@ -55,6 +55,6 @@ def recommend_classes_for_class(list_class_ids, list_tags):
     top_n_similar_classes_and_descriptions = [(similar_class, course_numbers_to_description_map_for_all_majors[similar_class]) for similar_class in top_similar_classes]
     return top_n_similar_classes_and_descriptions
 
-print(recommend_classes_for_class(['CS 5740', 'CS 4670', 'CS 3110'], []))
+#print(recommend_classes_for_class(['CS 5740', 'CS 4670', 'CS 3110'], []))
 
 
