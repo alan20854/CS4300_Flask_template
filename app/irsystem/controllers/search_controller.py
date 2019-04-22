@@ -24,7 +24,16 @@ def search():
 		course_ids = []
 		for i in class_names:
 			course_ids.append(i[:i.find(':')])
+		if len(course_ids) == 1 and course_ids[0] == '':
+			course_ids = []
+		if len(tag_names) == 1 and tag_names[0] == '':
+			tag_names = []
+
+		print(tag_names)
+		print(course_ids)
 		data = Tfidf_Recommendation.recommend_classes_for_class(course_ids, tag_names)
+		print(data)
+		print(len(data))
 		json_dict = {}
 		json_dict['recommendations'] = []
 		for i in data:
