@@ -47,6 +47,8 @@
                 <button type="submit"> Go! </button>
             </div>
         </div>
+        <div id = "results">
+        </div>
 
         <script>
         var classes = new Bloodhound({
@@ -111,6 +113,11 @@
 
         function search(){
           //var class_results = document.getElementsByTagName("input")[0].value;
+          var paras = document.getElementsByClassName('courseResult');
+          while (paras && paras[0]) {
+            paras[0].parentNode.removeChild(paras[0]);
+          }
+
           var class_results = document.getElementById("class-search").value;
           var tag_results = document.getElementById("tag-search").value;
           console.log(class_results)
@@ -150,7 +157,7 @@
                         results.push(description_txt)
                       });
                         
-                      $("body").append(results)
+                      $("#results").append(results)
                       console.log(value.recommendations[0].course)
 
                     },

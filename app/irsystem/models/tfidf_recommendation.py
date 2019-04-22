@@ -3,12 +3,17 @@ import json
 from sklearn.metrics.pairwise import cosine_similarity
 import numpy as np
 
-vectorizer = pkl.load(open("vectorizer.pkl", "rb"))
-X = pkl.load(open("tdm.pkl", "rb"))
-corpus = pkl.load(open("corpus.pkl", "rb"))
-course_codes  = pkl.load(open("course_codes.pkl", "rb"))
+#vectorizer = pkl.load(open("vectorizer.pkl", "rb"))
+#X = pkl.load(open("tdm.pkl", "rb"))
+#corpus = pkl.load(open("corpus.pkl", "rb"))
+#course_codes  = pkl.load(open("course_codes.pkl", "rb"))
 
-with open("../../../data/courseroster/full_json.txt") as f:
+vectorizer = pkl.load(open("./app/irsystem/models/vectorizer.pkl", "rb"))
+X = pkl.load(open("./app/irsystem/models/tdm.pkl", "rb"))
+corpus = pkl.load(open("./app/irsystem/models/corpus.pkl", "rb"))
+course_codes  = pkl.load(open("./app/irsystem/models/course_codes.pkl", "rb"))
+
+with open("./data/courseroster/full_json.txt") as f:
     cornell_course_descriptions = json.load(f)
 
 all_majors = list(cornell_course_descriptions.keys())

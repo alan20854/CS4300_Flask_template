@@ -1,7 +1,7 @@
 from . import *  
 from app.irsystem.models.helpers import *
 from app.irsystem.models.helpers import NumpyEncoder as NumpyEncoder
-from app.irsystem.models import recommendation as Recommendation
+from app.irsystem.models import tfidf_recommendation as Tfidf_Recommendation
 import pickle
 
 project_name = "Course Finder"
@@ -24,7 +24,7 @@ def search():
 		course_ids = []
 		for i in class_names:
 			course_ids.append(i[:i.find(':')])
-		data = Recommendation.recommend_n_classes_for_class(course_ids[0], 5)
+		data = Tfidf_Recommendation.recommend_classes_for_class(course_ids, tag_names)
 		json_dict = {}
 		json_dict['recommendations'] = []
 		for i in data:
