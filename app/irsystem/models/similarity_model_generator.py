@@ -8,19 +8,17 @@ from gensim.models.doc2vec import Doc2Vec, TaggedDocument
 from nltk.tokenize import word_tokenize
 
 
-cs_representations = pickle.load( open( "eng_representations_just_descriptions_2.p", "rb" ) )
-print(type(cs_representations))
+cs_representations = pickle.load(open( "all_courses_20_tfidf_representations.p", "rb" ) )
 
 data = [value for _, value in cs_representations.items()]
-
 tagged_data = [TaggedDocument(words=word_tokenize(_d.lower()), tags=[str(i)]) for i, _d in enumerate(data)]
-max_epochs = 200
-vec_size = 50
+max_epochs = 400
+vec_size = 100
 alpha = 0.025
 
 model = Doc2Vec(size=vec_size,
                 alpha=alpha, 
-                min_alpha=0.00025,
+                min_alpha=0.0025,
                 min_count=1,
                 dm =1)
 
@@ -36,5 +34,5 @@ for epoch in range(max_epochs):
     # fix the learning rate, no decay
     model.min_alpha = model.alpha
 
-model.save("d2v_just_description_2.model")
+model.save("d2v_all_class_descriptions.model")
 print("Model Saved")
