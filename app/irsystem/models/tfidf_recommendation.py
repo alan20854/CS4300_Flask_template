@@ -4,19 +4,25 @@ from sklearn.metrics.pairwise import cosine_similarity
 import numpy as np
 import random
 
-vectorizer = pkl.load(open("vectorizer.pkl", "rb"))
-X = pkl.load(open("tdm.pkl", "rb"))
-corpus = pkl.load(open("corpus.pkl", "rb"))
-course_codes  = pkl.load(open("course_codes.pkl", "rb"))
+#vectorizer = pkl.load(open("vectorizer.pkl", "rb"))
+#X = pkl.load(open("tdm.pkl", "rb"))
+#corpus = pkl.load(open("corpus.pkl", "rb"))
+#course_codes  = pkl.load(open("course_codes.pkl", "rb"))
 
-with open("../../../data/courseroster/full_json.txt") as f:
+vectorizer = pkl.load(open("./app/irsystem/models/vectorizer.pkl", "rb"))
+X = pkl.load(open("./app/irsystem/models/tdm.pkl", "rb"))
+corpus = pkl.load(open("./app/irsystem/models/corpus.pkl", "rb"))
+course_codes  = pkl.load(open("./app/irsystem/models/course_codes.pkl", "rb"))
+
+with open("./data/courseroster/full_json.txt") as f:
     cornell_course_descriptions = json.load(f)
 
 all_majors = list(cornell_course_descriptions.keys())
 course_numbers_to_description_map_for_all_majors = {}
 for dept in all_majors:
     for course in cornell_course_descriptions[dept]:
-        course_numbers_to_description_map_for_all_majors[dept + ' ' + course['courseNumber']] = course['description']
+        course_numbers_to_description_map_for_all_majors[dept + ' ' + course['courseNumber']] = {'desc': course['description'], 
+        'prof': course['professor'], 'prerequisite': course['prerequisite'], 'offered': course['offered'], 'length': course['courseLength']}
 
 def recommend_classes_for_class(list_class_ids, tag_list):
     '''
