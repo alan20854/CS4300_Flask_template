@@ -51,12 +51,12 @@ def create_map(json):
     if c['catalogWhenOffered'] != None: 
       data['offered'] = c['catalogWhenOffered'][:-1].split(', ')
       if 'Fall' in data['offered']:
-        data['url'] = "https://classes.cornell.edu/browse/roster/FA19" +  "/class/" + c['subject']+ c['catalogNbr']
+        data['url'] = "https://classes.cornell.edu/browse/roster/FA19" +  "/class/" + c['subject']+"/" +c['catalogNbr']
       else:
-        data['url'] = "https://classes.cornell.edu/browse/roster/SP19" +  "/class/" + c['subject']+ c['catalogNbr']
+        data['url'] = "https://classes.cornell.edu/browse/roster/SP19" +  "/class/" + c['subject']+"/" +c['catalogNbr']
     else: 
       data['offered'] = None
-      data['url'] = "https://classes.cornell.edu/browse/roster/FA19" +  "/class/" + c['subject']+ c['catalogNbr']
+      data['url'] = "https://classes.cornell.edu/browse/roster/FA19" +  "/class/" + c['subject']+"/" +c['catalogNbr']
 
     data['outcomes'] = outcomes
     data['subject'] = c['subject']
