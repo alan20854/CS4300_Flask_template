@@ -47,11 +47,34 @@ def create_map(json):
     data['courseNumber'] = c['catalogNbr']
     data['courseTitle'] = c['titleLong']
     data['description'] = c['description']
-    data['offered'] = c['catalogWhenOffered']
+
+    if c['catalogWhenOffered'] != None: 
+      data['offered'] = c['catalogWhenOffered'][:-1].split(', ')
+      if 'Fall' in data['offered']:
+        data['url'] = "https://classes.cornell.edu/browse/roster/FA19" +  "/class/" + c['subject']+ c['catalogNbr']
+      else:
+        data['url'] = "https://classes.cornell.edu/browse/roster/SP19" +  "/class/" + c['subject']+ c['catalogNbr']
+    else: 
+      data['offered'] = None
+      data['url'] = "https://classes.cornell.edu/browse/roster/FA19" +  "/class/" + c['subject']+ c['catalogNbr']
+
     data['outcomes'] = outcomes
     data['subject'] = c['subject']
     classsec = c['enrollGroups'][0]['classSections'][0]
     data['professor'] = []
+    try: 
+      data['prerequisite'] = c['Prerequisite'] 
+    except: 
+      data['prerequisite'] = None
+
+    try:
+      if int(c['endDt'][:2]) - int(c['startDt'][:2]) < 4:
+        data['courseLength'] = "7 Week"
+      else:
+        data['courseLength'] = 'Full'
+    except:
+        data['courseLength'] = None
+
     for meet in classsec['meetings']:
       for inst in meet['instructors']:
         name = inst['firstName'] + " " + inst['lastName']
