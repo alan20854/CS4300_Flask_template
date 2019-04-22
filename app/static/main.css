@@ -53,10 +53,12 @@ border: 1px solid #000;
 }
 
 .course-result-div {
-margin: 0 auto;
+margin: 5px auto;
 background-color:#f7f7f7;
 max-width:75%;
 width:50%;
+border-radius: 25px;
+padding: 10px;
 }
 
 input {  }

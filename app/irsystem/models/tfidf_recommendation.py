@@ -36,7 +36,7 @@ def recommend_classes_for_class(list_class_ids, tag_list):
         split_course_id = class_id.split(' ')
         dept = split_course_id[0]
         course_number = split_course_id[1]
-        classes_representation += ' ' +  (course_numbers_to_description_map_for_all_majors[dept + ' ' + course_number])
+        classes_representation += ' ' +  (course_numbers_to_description_map_for_all_majors[dept + ' ' + course_number]['desc'])
 
     # Incorporate the tags
     classes_related_to_tags = set()

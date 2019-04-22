@@ -31,7 +31,7 @@ def search():
 			k, v = i
 			class_dict = {}
 			class_dict["course"] = k
-			class_dict["description"] = v
+			class_dict["description"] = v['desc']
 			json_dict['recommendations'].append(class_dict)
 		return(json.dumps(json_dict))
 
