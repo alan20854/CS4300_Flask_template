@@ -4,7 +4,7 @@ import math
 import pickle
 import numpy as np
 import matplotlib
-
+import re
 
 #Adapted from https://github.com/Rodantny/Rate-My-Professor-Scraper-and-Search
 class RateMyProfScraper:
@@ -76,53 +76,64 @@ class RateMyProfScraper:
 
 if __name__ == "__main__":
     CornellUniversity = pickle.load(open("raw_rateMyProfessor_data.p", "rb"))
+
+    prof_ratings = {}
+    for prof in CornellUniversity.professorlist:
+        regex = re.compile('[^a-zA-Z ]')
+        name = regex.sub(' ', prof['tFname'] + " " + prof['tLname'])
+        try:
+            prof_ratings[name] = float(prof['overall_rating'])
+        except:
+            prof_ratings[name] = None
+    pickle.dump(prof_ratings, open('prof_ratings.p', "wb"))
+
     #print(CornellUniversity.professorlist[0])
-    cardie_index = CornellUniversity.SearchProfessor("Claire Cardie")
-    #tid = CornellUniversity.GetProfessorTID(cardie_index)
-    print(cardie_index)
-    #print(tid) #521940
-    #CornellUniversity.GetRMPProfessorJSON(tid)
-    #cardie_content = CornellUniversity.GetRMPProfessorPageContents(521940)
-    #print(cardie_content)
-    #pruneProfReviewFile(cardie_content)
-    #CornellUniversity.PrintProfessorInfo()
-    #CornellUniversity.PrintProfessorDetail(CornellUniversity.indexnumber)
-    #CornellUniversity.PrintProfessorDetail("overall_rating")
+    # cardie_index = CornellUniversity.SearchProfessor("Claire Cardie")
+    # #tid = CornellUniversity.GetProfessorTID(cardie_index)
+    # print(cardie_index)
+    # #print(tid) #521940
+    # #CornellUniversity.GetRMPProfessorJSON(tid)
+    # #cardie_content = CornellUniversity.GetRMPProfessorPageContents(521940)
+    # #print(cardie_content)
+    # #pruneProfReviewFile(cardie_content)
+    # #CornellUniversity.PrintProfessorInfo()
+    # #CornellUniversity.PrintProfessorDetail(CornellUniversity.indexnumber)
+    # #CornellUniversity.PrintProfessorDetail("overall_rating")
 
-    print(CornellUniversity.professorlist[352])
-    ratings = []
-    #0-5, 6-10, 11-25, 26-50, 51-100, > 100
-    numComments = [0, 0, 0, 0, 0, 0]
-    sum_comments = 0
-    sum_ratings = 0
-    num_w_ratings = 0
-    for i in range(len(CornellUniversity.professorlist)):
-        prof = CornellUniversity.professorlist[i]
-        rating = prof['overall_rating']
-        comments = prof['tNumRatings']
-        sum_comments += comments
-        if comments < 6:
-            numComments[0] += 1
-        elif comments < 11:
-            numComments[1] += 1
-        elif comments < 26:
-            numComments[2] += 1
-        elif comments < 51:
-            numComments[3] += 1
-        elif comments < 101:
-            numComments[4] += 1
-        else:
-            numComments[5] += 1
+    # print(CornellUniversity.professorlist[352])
+    # ratings = []
+    # #0-5, 6-10, 11-25, 26-50, 51-100, > 100
+    # numComments = [0, 0, 0, 0, 0, 0]
+    # sum_comments = 0
+    # sum_ratings = 0
+    # num_w_ratings = 0
+    # for i in range(len(CornellUniversity.professorlist)):
+    #     prof = CornellUniversity.professorlist[i]
+    #     rating = prof['overall_rating']
+    #     comments = prof['tNumRatings']
+    #     sum_comments += comments
+    #     if comments < 6:
+    #         numComments[0] += 1
+    #     elif comments < 11:
+    #         numComments[1] += 1
+    #     elif comments < 26:
+    #         numComments[2] += 1
+    #     elif comments < 51:
+    #         numComments[3] += 1
+    #     elif comments < 101:
+    #         numComments[4] += 1
+    #     else:
+    #         numComments[5] += 1
 
-        if rating != 'N/A':
-            num_w_ratings += 1
-            sum_ratings += float(rating)
-            ratings.append(rating)
-        #numComments.append(comments)
-    #print(ratings)
-    #print(numComments)
-    print(sum_comments / 2602)
-    print(sum_ratings / num_w_ratings)
+    #     if rating != 'N/A':
+    #         num_w_ratings += 1
+    #         sum_ratings += float(rating)
+    #         ratings.append(rating)
+    #     #numComments.append(comments)
+    # #print(ratings)
+    # #print(numComments)
+    # print(sum_comments / 2602)
+    # print(sum_ratings / num_w_ratings)
 
     #plt = matplotlib.pyplot
 
