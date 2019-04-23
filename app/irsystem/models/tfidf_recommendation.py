@@ -35,6 +35,7 @@ def recommend_classes_for_class(list_class_ids, tag_list):
     '''
     # A combined string of each class's description
 
+    print(prof_ratings['Daisy Fan'])
 
     top_n_similar_classes_and_descriptions = []
 
