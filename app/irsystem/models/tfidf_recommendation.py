@@ -109,9 +109,11 @@ def recommend_classes_for_class(list_class_ids, tag_list):
                 instructor_rating = 3.0
                 course_info['replacementRating'] = True
             course_info['rating'] = instructor_rating
-
+            if instructor_rating is None:
+                instructor_rating = 3
             rank_by_rating.append((courseid, course_info, instructor_rating))
-    
+    print("SKJDFLKJFSLKDJ")
+    print(rank_by_rating)
     rank_by_rating.sort(key=lambda x : x[2], reverse=True)
     rank_by_rating[0:min(len(rank_by_rating), 5)]
     final_ranking = [(similar_class, info) for similar_class, info,_ in rank_by_rating]

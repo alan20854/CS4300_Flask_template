@@ -3,7 +3,6 @@
     background-color: #5bc0de;
     
 }
-
 .label {
   padding: .2em .6em .3em !important;
   font-weight: 700;
@@ -11,21 +10,16 @@
   border-radius: 0.25em;
 }
 
-/* For div containing the search bar as well as the icon */
-#search-bar-container {
-  width: 700px !important;
-  margin: 0 auto !important;
-  margin-top: 400px;
-  display: table;
-}
-
 /* For the input bar*/
 .bootstrap-tagsinput {
+  min-width: 400px !important;
   vertical-align: middle;
+  display: table-cell;
 }
 
 .bootstrap-tagsinput input {
-  width: 400px !important;
+  line-height: 18px;
+  vertical-align: unset !important;
 }
 
 /* For the magnifying */
