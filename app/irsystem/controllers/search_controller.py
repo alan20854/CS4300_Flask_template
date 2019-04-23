@@ -37,6 +37,11 @@ def search():
 			class_dict = {}
 			class_dict["course"] = k + ": " + v['title']
 			class_dict["description"] = v['desc']
+			class_dict["professor"] = v['prof']
+			class_dict["rating"] = v['rating']
+			class_dict["replacementRating"] = v['replacementRating']
+			class_dict["offered"] = v['offered']
+			class_dict["length"] = v['length']
 			json_dict['recommendations'].append(class_dict)
 		return(json.dumps(json_dict))
 

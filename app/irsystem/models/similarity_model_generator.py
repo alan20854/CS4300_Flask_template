@@ -20,7 +20,7 @@ model = Doc2Vec(size=vec_size,
                 alpha=alpha, 
                 min_alpha=0.0025,
                 min_count=1,
-                dm =1)
+                dm = 1)
 
 model.build_vocab(tagged_data)
 
