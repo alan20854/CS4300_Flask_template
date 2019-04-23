@@ -22,7 +22,8 @@ course_numbers_to_description_map_for_all_majors = {}
 for dept in all_majors:
     for course in cornell_course_descriptions[dept]:
         course_numbers_to_description_map_for_all_majors[dept + ' ' + course['courseNumber']] = {'desc': course['description'], 
-        'prof': course['professor'], 'prerequisite': course['prerequisite'], 'offered': course['offered'], 'length': course['courseLength']}
+        'prof': course['professor'], 'prerequisite': course['prerequisite'], 'offered': course['offered'], 'length': course['courseLength'],
+        'title': course['courseTitle']}
 
 def recommend_classes_for_class(list_class_ids, tag_list):
     '''
@@ -58,7 +59,7 @@ def recommend_classes_for_class(list_class_ids, tag_list):
                 top_10_class_indices.append(idx)
         top_7_class_indices = top_10_class_indices[0:min(len(top_10_class_indices), 7)]
         top_similar_classes = [course_codes[x] for x in top_7_class_indices]
-        top_n_similar_classes_and_descriptions = [(similar_class, course_numbers_to_description_map_for_all_majors[similar_class]['desc']) for similar_class in top_similar_classes]
+        top_n_similar_classes_and_descriptions = [(similar_class, course_numbers_to_description_map_for_all_majors[similar_class]) for similar_class in top_similar_classes]
 
     if tag_list != []:
         # Incorporate the tags
@@ -86,7 +87,7 @@ def recommend_classes_for_class(list_class_ids, tag_list):
 
         top_3_class_tag_indices = top_10_class_tag_indices[0:min(len(top_10_class_tag_indices), 3)]
         top_similar_classes_tags = [course_codes[x] for x in top_3_class_tag_indices]
-        top_n_similar_classes_and_descriptions_tags = [(similar_class, course_numbers_to_description_map_for_all_majors[similar_class]['desc']) for similar_class in top_similar_classes_tags]
+        top_n_similar_classes_and_descriptions_tags = [(similar_class, course_numbers_to_description_map_for_all_majors[similar_class]) for similar_class in top_similar_classes_tags]
 
 
 

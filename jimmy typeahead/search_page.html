@@ -1,0 +1,72 @@
+{% extends "main-typeahead.html" %}
+{% block content %}
+<head>
+    <link href="./static/css/custom.css" rel="stylesheet">
+</head>
+
+
+
+
+<script src="https://d3js.org/d3.v3.min.js"></script>
+
+<body>
+    <div id = "search-bar-container">
+        <input type="text" data-role="tagsinput" placeholder="Search for a song"/>
+        <div onclick="search()" class = "search-icon">
+            <i class="fas fa-search fa-2x"></i>
+        </div>
+    </div>
+
+</body>
+
+
+<script>
+var songs = new Bloodhound({
+  datumTokenizer: Bloodhound.tokenizers.obj.whitespace('song_name', 'artist'),
+  queryTokenizer: Bloodhound.tokenizers.whitespace,
+  prefetch: {
+    url: 'static/song_id_and_names_0_63233.json',
+    filter: function(list) {
+    return list.songs;
+    }
+  }
+});
+
+songs.clearPrefetchCache();
+songs.initialize();
+
+var elt = $('input');
+elt.tagsinput({
+  itemValue: 'song_id',
+  itemText: function(song){
+    return song.song_name + ' - ' + song.artist;
+    },
+  typeaheadjs: {
+    name: 'songs',
+    limit: 10,
+    displayKey: function(song){
+      return song.song_name + ' - ' + song.artist;
+    },
+    source: songs.ttAdapter()
+  }
+});
+
+function search(){
+  var song_ids = document.getElementsByTagName("input")[2].value;
+  song_ids = String(song_ids)
+  $.ajax({
+            url: '/songSearchHandler',
+            data: JSON.stringify({'song_ids':song_ids}),
+            contentType: "application/json",
+            type: 'POST',
+            success: function(response) {
+              // success
+            },
+            error: function(error) {
+              console.log("ERROR");
+            }
+        });
+}
+</script>
+
+{% endblock %}
