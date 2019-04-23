@@ -5,18 +5,18 @@ import numpy as np
 import random
 import re
 
-# vectorizer = pkl.load(open("vectorizer.pkl", "rb"))
-# X = pkl.load(open("tdm.pkl", "rb"))
-# corpus = pkl.load(open("corpus.pkl", "rb"))
-# course_codes  = pkl.load(open("course_codes.pkl", "rb"))
+vectorizer = pkl.load(open("vectorizer.pkl", "rb"))
+X = pkl.load(open("tdm.pkl", "rb"))
+corpus = pkl.load(open("corpus.pkl", "rb"))
+course_codes  = pkl.load(open("course_codes.pkl", "rb"))
 
-vectorizer = pkl.load(open("./app/irsystem/models/vectorizer.pkl", "rb"))
-X = pkl.load(open("./app/irsystem/models/tdm.pkl", "rb"))
-corpus = pkl.load(open("./app/irsystem/models/corpus.pkl", "rb"))
-course_codes  = pkl.load(open("./app/irsystem/models/course_codes.pkl", "rb"))
-prof_ratings = pkl.load(open('./data/ratemyprofessor/prof_ratings.p', 'rb'), encoding="utf-8")
+# vectorizer = pkl.load(open("./app/irsystem/models/vectorizer.pkl", "rb"))
+# X = pkl.load(open("./app/irsystem/models/tdm.pkl", "rb"))
+# corpus = pkl.load(open("./app/irsystem/models/corpus.pkl", "rb"))
+# course_codes  = pkl.load(open("./app/irsystem/models/course_codes.pkl", "rb"))
+prof_ratings = pkl.load(open('../../../data/ratemyprofessor/prof_ratings.p', 'rb'), encoding="utf-8")
 
-with open("./data/courseroster/full_json.txt") as f:
+with open("../../../data/courseroster/full_json.txt") as f:
     cornell_course_descriptions = json.load(f)
 
 all_majors = list(cornell_course_descriptions.keys())
@@ -35,6 +35,7 @@ def recommend_classes_for_class(list_class_ids, tag_list):
     '''
     # A combined string of each class's description
 
+    print(prof_ratings['Daisy Fan'])
 
     top_n_similar_classes_and_descriptions = []
 
