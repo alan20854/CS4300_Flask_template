@@ -57,8 +57,19 @@ margin: 5px auto;
 background-color:#f7f7f7;
 max-width:75%;
 width:50%;
+display: flex;
 border-radius: 25px;
 padding: 10px;
+}
+
+.course-result-information-div {
+	flex: 0 0 75%;
+	padding: 5px;
+}
+
+.course-result-metadata-div {
+	flex: 1;
+	padding: 5px;
 }
 
 input {  }

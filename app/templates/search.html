@@ -107,6 +107,80 @@
           }
         });
 
+        // Creates a div to hold everything to do with a recommenation
+        function createRecommendationComponent(recommendation) {
+          console.log(recommendation);
+          let course = recommendation.course;
+          let description = recommendation.description;
+          let title = recommendation.title;
+          let professor = recommendation.professor;
+          let rating = recommendation.rating;
+          let isReplacementRating = JSON.parse(recommendation.replacementRating);
+          let offered = recommendation.offered;
+          let length = recommendation.length;
+
+
+          // Main div
+          course_result = document.createElement("div");
+          course_result.className = "course-result-div";
+          
+
+          // First child div
+          course_result_information_div = document.createElement("div");
+          course_result_information_div.className = "course-result-information-div";
+
+          course_txt = document.createElement("p");
+          course_txt.innerHTML = course
+
+          description_txt = document.createElement("p");
+          if (description == null || description.length == 0) {
+              description = "No course description available."
+          }
+          description_txt.innerHTML = description
+
+          // Add course title "CS1110 - Introduction to Python" and course description 
+          course_result_information_div.appendChild(course_txt);
+          course_result_information_div.appendChild(description_txt);
+
+
+          // Second child div
+          course_result_metadata_div = document.createElement("div");
+          course_result_metadata_div.className = "course-result-metadata-div";
+
+          // Professor
+          professor_txt = document.createElement("p");
+          if (professor == null || professor.length == 0) {
+            professor = "No professor information available."
+          }
+          console.log("PROFESSOR");
+          console.log(professor);
+          professor_txt.innerHTML = 'Professor' + '<br>' + professor;
+          course_result_metadata_div.appendChild(professor_txt);
+
+          // Rating
+          course_rating_txt = document.createElement("p");
+          if (isReplacementRating) [
+            rating = 0
+          ]
+          course_rating_txt.innerHTML = 'Course Rating: ' + rating + '/5'
+          course_result_metadata_div.appendChild(course_rating_txt);
+
+          // offered
+          course_offered_txt = document.createElement("p");
+          course_offered_txt.innerHTML = 'Course offered in: ' + offered;
+          course_result_metadata_div.appendChild(course_offered_txt);
+
+          // length
+          course_length_txt = document.createElement("p");
+          course_length_txt.innerHTML = 'Course is: ' + length + ' weeks';
+          course_result_metadata_div.appendChild(course_length_txt);
+
+          // Add two child divs to parent div
+          course_result.appendChild(course_result_information_div);
+          course_result.appendChild(course_result_metadata_div);
+          return course_result;
+        }
+
         function search(){
           //var class_results = document.getElementsByTagName("input")[0].value;
           var paras = document.getElementsByClassName('course-result-div');
@@ -137,24 +211,7 @@
                       }*/
 
                       value.recommendations.forEach(function(recommendation) {
-                        course = recommendation.course
-                        description = recommendation.description
-
-                        course_result = document.createElement("div");
-                        course_result.className = "course-result-div";
-
-                        course_txt = document.createElement("p");
-                        course_txt.className = "courseResult";
-                        course_txt.innerHTML = course
-                        description_txt = document.createElement("p");
-                        description_txt.className = "courseResult";
-                        if (description == null || description.length == 0) {
-                            description = "No course description available."
-                        }
-                        description_txt.innerHTML = description
-                        course_result.appendChild(course_txt);
-                        course_result.appendChild(description_txt);
-                        results.push(course_result)
+                        results.push(createRecommendationComponent(recommendation))
                         //results.push(course_txt)
                         //results.push(description_txt)
                       });

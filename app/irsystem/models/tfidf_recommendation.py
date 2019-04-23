@@ -5,18 +5,18 @@ import numpy as np
 import random
 import re
 
-vectorizer = pkl.load(open("vectorizer.pkl", "rb"))
-X = pkl.load(open("tdm.pkl", "rb"))
-corpus = pkl.load(open("corpus.pkl", "rb"))
-course_codes  = pkl.load(open("course_codes.pkl", "rb"))
+# vectorizer = pkl.load(open("vectorizer.pkl", "rb"))
+# X = pkl.load(open("tdm.pkl", "rb"))
+# corpus = pkl.load(open("corpus.pkl", "rb"))
+# course_codes  = pkl.load(open("course_codes.pkl", "rb"))
 
-# vectorizer = pkl.load(open("./app/irsystem/models/vectorizer.pkl", "rb"))
-# X = pkl.load(open("./app/irsystem/models/tdm.pkl", "rb"))
-# corpus = pkl.load(open("./app/irsystem/models/corpus.pkl", "rb"))
-# course_codes  = pkl.load(open("./app/irsystem/models/course_codes.pkl", "rb"))
-prof_ratings = pkl.load(open('../../../data/ratemyprofessor/prof_ratings.p', 'rb'), encoding="utf-8")
+vectorizer = pkl.load(open("./app/irsystem/models/vectorizer.pkl", "rb"))
+X = pkl.load(open("./app/irsystem/models/tdm.pkl", "rb"))
+corpus = pkl.load(open("./app/irsystem/models/corpus.pkl", "rb"))
+course_codes  = pkl.load(open("./app/irsystem/models/course_codes.pkl", "rb"))
+prof_ratings = pkl.load(open('./data/ratemyprofessor/prof_ratings.p', 'rb'), encoding="utf-8")
 
-with open("../../../data/courseroster/full_json.txt") as f:
+with open("./data/courseroster/full_json.txt") as f:
     cornell_course_descriptions = json.load(f)
 
 all_majors = list(cornell_course_descriptions.keys())
@@ -87,7 +87,7 @@ def recommend_classes_for_class(list_class_ids, tag_list):
                 top_10_class_tag_indices.append(idx)
 
         top_3_class_tag_indices = top_10_class_tag_indices[0:min(len(top_10_class_tag_indices), 3)]
-        top_similar_classes_tags = [course_codes[x] for x in top_3_class_tag_indices]
+        top_similar_classes_tags    = [course_codes[x] for x in top_3_class_tag_indices]
         top_n_similar_classes_and_descriptions_tags = [(similar_class, course_numbers_to_description_map_for_all_majors[similar_class]) for similar_class in top_similar_classes_tags]
 
     res_list = top_n_similar_classes_and_descriptions + top_n_similar_classes_and_descriptions_tags
@@ -113,7 +113,7 @@ def recommend_classes_for_class(list_class_ids, tag_list):
             rank_by_rating.append((courseid, course_info, instructor_rating))
     
     rank_by_rating.sort(key=lambda x : x[2], reverse=True)
-    rank_by_rating[0:min(len(top_10_class_tag_indices), 5)]
+    rank_by_rating[0:min(len(rank_by_rating), 5)]
     final_ranking = [(similar_class, info) for similar_class, info,_ in rank_by_rating]
     random.Random(1).shuffle(final_ranking)
     return final_ranking
