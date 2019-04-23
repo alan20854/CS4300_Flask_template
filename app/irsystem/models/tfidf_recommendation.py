@@ -13,6 +13,7 @@ vectorizer = pkl.load(open("./app/irsystem/models/vectorizer.pkl", "rb"))
 X = pkl.load(open("./app/irsystem/models/tdm.pkl", "rb"))
 corpus = pkl.load(open("./app/irsystem/models/corpus.pkl", "rb"))
 course_codes  = pkl.load(open("./app/irsystem/models/course_codes.pkl", "rb"))
+prof_ratings = pkl.laod(open('../../../data/ratemyprofessor/prof_ratings.p', 'rb'))
 
 with open("./data/courseroster/full_json.txt") as f:
     cornell_course_descriptions = json.load(f)
@@ -74,7 +75,6 @@ def recommend_classes_for_class(list_class_ids, tag_list):
         sim_scores_tags = cosine_similarity(X, test_x_tags).flatten()
         top_score_tag_indices = np.argsort(sim_scores_tags)[::-1][0:20]
 
-
         top_10_class_tag_indices = []
         prev_score = None
         for idx in top_score_tag_indices:
@@ -89,9 +89,16 @@ def recommend_classes_for_class(list_class_ids, tag_list):
         top_n_similar_classes_and_descriptions_tags = [(similar_class, course_numbers_to_description_map_for_all_majors[similar_class]['desc']) for similar_class in top_similar_classes_tags]
 
 
-
     res_list = top_n_similar_classes_and_descriptions + top_n_similar_classes_and_descriptions_tags
-    random.Random(1).shuffle(res_list)
-    return res_list
+    final_ranking = []
+    for courseid, course_info in res_list: 
+        instructor = course_info['prof'][0]
+        instructor_rating = prof_ratings[instructor]
+        final_ranking.append(courseid, course_info, instructor_rating)
+    
+    final_ranking.sort(key=lambda x : x[2], reverse=True)
+    final_ranking[0:min(len(top_10_class_tag_indices), 5)]
+    random.Random(1).shuffle(final_ranking)
+    return final_ranking
 
 #print(recommend_classes_for_class(['CS 3110'], ['programming', 'statistics']))
