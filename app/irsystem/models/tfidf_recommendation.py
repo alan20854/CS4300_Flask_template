@@ -24,7 +24,8 @@ course_numbers_to_description_map_for_all_majors = {}
 for dept in all_majors:
     for course in cornell_course_descriptions[dept]:
         course_numbers_to_description_map_for_all_majors[dept + ' ' + course['courseNumber']] = {'desc': course['description'], 
-        'prof': course['professor'], 'prerequisite': course['prerequisite'], 'offered': course['offered'], 'length': course['courseLength']}
+        'prof': course['professor'], 'prerequisite': course['prerequisite'], 'offered': course['offered'], 'length': course['courseLength'],
+        'title': course['courseTitle']}
 
 def recommend_classes_for_class(list_class_ids, tag_list):
     '''
