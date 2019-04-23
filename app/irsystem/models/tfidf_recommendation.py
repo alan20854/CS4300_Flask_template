@@ -101,8 +101,9 @@ def recommend_classes_for_class(list_class_ids, tag_list):
                 value = regex.sub(' ', value)
                 course_info[key] = value
         
-        print(course_info)
-        if course_info['prof'][0] != None and course_info['prof'][0] != []:
+        print(type(course_info['prof']))
+        print(course_info['prof'])
+        if course_info['prof'] != None and len(course_info['prof']) > 0:
             try: 
                 instructor_rating = prof_ratings[course_info['prof'][0]]
                 course_info['replacementRating'] = False

@@ -157,10 +157,12 @@
 
           // Rating
           course_rating_txt = document.createElement("p");
-          if (isReplacementRating) [
-            rating = 0
-          ]
-          course_rating_txt.innerHTML = 'Course Rating: ' + rating + '/5'
+          if (isReplacementRating || rating == null) {
+            course_rating_txt.innerHTML = 'Course Rating: N/A';
+          } else {
+            course_rating_txt.innerHTML = 'Course Rating: ' + rating + '/5';
+          }
+          
           course_result_metadata_div.appendChild(course_rating_txt);
 
           // offered
