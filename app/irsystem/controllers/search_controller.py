@@ -29,7 +29,6 @@ def search():
 			tag_names = []
 
 		data = Tfidf_Recommendation.recommend_classes_for_class(course_ids, tag_names)
-		print(data)
 		json_dict = {}
 		json_dict['recommendations'] = []
 		for i in data:
