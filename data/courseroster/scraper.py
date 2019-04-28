@@ -133,9 +133,23 @@ def get_EN_class_names(subjects):
     names += get_class_names(data)
   return names
     
+def filter_crosslisted(courses_dict):
+  filtered_json = {}
+  seen_course_names = []
+  for sub, course_lst in courses_dict.items():
+    filtered_sub = []
+    for course in course_lst: 
+      if course['courseTitle'] not in seen_course_names:
+        seen_course_names.append(course["courseTitle"])
+        filtered_sub.append(course)
+    filtered_json[sub] = filtered_sub
+  return filtered_json      
+
 
 print("Starting data collection")
-subjects = get_subjects()
+sp_subjects = set(get_subjects())
+fa_subjects = set(get_subjects('FA19'))
+subjects = sp_subjects.union(fa_subjects)
 print("Obtained subjects")
 # with open('classes.csv','w') as g:
 #   rows = ['courseNumber', 'courseTitle', 'subject', 'offered', 'professor','description', 'outcomes']
@@ -147,34 +161,50 @@ print("Obtained subjects")
 #   classes = create_map(data)
 #   create_csv(classes)
 
-new_json = scrape(subject="CS")
-class_names = get_class_names(new_json)
-with open('CS_course_names.p', 'wb') as f:
-  pickle.dump(class_names, f)
+# new_json = scrape(subject="CS")
+# class_names = get_class_names(new_json)
+# with open('CS_course_names.p', 'wb') as f:
+#   pickle.dump(class_names, f)
 
-with open('en_course_names.p', 'wb') as f:
-  pickle.dump(get_EN_class_names(engineering_subs), f)
+# with open('en_course_names.p', 'wb') as f:
+#   pickle.dump(get_EN_class_names(engineering_subs), f)
 
-en_json={}
-for sub in engineering_subs:
-  new_json = create_map(scrape(subject=sub))
-  en_json[sub] = new_json
+# en_json={}
+# for sub in engineering_subs:
+#   new_json = create_map(scrape(subject=sub))
+#   en_json[sub] = new_json
 
-with open('en_json.txt', 'w') as output:
-  json.dump(en_json, output)
+# with open('en_json.txt', 'w') as output:
+#   json.dump(en_json, output)
 
 full_json = {}
-for sub in subjects:  
-  new_json = create_map(scrape(subject=sub))
-  if sub == 'CS':
-    cs_json = new_json
-  full_json[sub] = new_json
+for sub in subjects: 
+  try:
+    sp_json = create_map(scrape(subject=sub))
+  except:
+    continue
+
+  try:
+    fa_json = create_map(scrape("FA19", subject=sub))
+  except:
+    continue
+  combined_json = sp_json
+  for fa_class in fa_json:
+    only_fa = True
+    for sp_class in sp_json:
+      if fa_class['courseTitle'] == sp_class['courseTitle']:
+        only_fa = False
+    if only_fa:
+      combined_json.append(fa_class)
+  full_json[sub] = sp_json
+  
+full_json = filter_crosslisted(full_json)
 
 with open('full_json.txt', 'w') as output:
   json.dump(full_json, output)
 
-with open('cs_json.txt', 'w') as output:
-  json.dump(cs_json, output)
+# with open('cs_json.txt', 'w') as output:
+#   json.dump(cs_json, output)
 
 
 #make graph of num professors vs major
