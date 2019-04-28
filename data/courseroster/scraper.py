@@ -131,7 +131,14 @@ def get_EN_class_names(subjects):
   for x in subjects:
     data = scrape(subject=x)
     names += get_class_names(data)
-  return names
+  return names  
+
+def add_crosslisted(courses_json, course_info):
+  for _, courses in courses_json.items():
+    for c in courses:
+      if course_info['courseTitle'] == c['courseTitle']:
+        c['crosslisted'].append(course_info['subject'])
+
     
 def filter_crosslisted(courses_dict):
   filtered_json = {}
@@ -141,7 +148,10 @@ def filter_crosslisted(courses_dict):
     for course in course_lst: 
       if course['courseTitle'] not in seen_course_names:
         seen_course_names.append(course["courseTitle"])
+        course['crosslisted'] = []
         filtered_sub.append(course)
+      else:
+        add_crosslisted(filtered_json, course)
     filtered_json[sub] = filtered_sub
   return filtered_json      
 
