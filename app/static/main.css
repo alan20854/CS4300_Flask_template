@@ -66,3 +66,12 @@ color: #4285F4;
 .search-results{
 	padding:10px;
 }
+
+a .morelink {
+	text-decoration:none;
+	outline: none;
+}
+.morecontent span {
+	display: none;
+
+}

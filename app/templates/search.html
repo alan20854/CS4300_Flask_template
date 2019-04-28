@@ -107,7 +107,6 @@
 
         // Creates a div to hold everything to do with a recommenation
         function createRecommendationComponent(recommendation) {
-          console.log(recommendation);
           let course = recommendation.course;
           let description = recommendation.description;
           let title = recommendation.title;
@@ -134,7 +133,10 @@
           if (description == null || description.length == 0) {
               description = "No course description available."
           }
-          description_txt.innerHTML = description
+
+          description_txt = document.createElement("div");
+          description_txt.className = "course-description more";
+          description_txt.innerHTML = description;
 
           // Add course title "CS1110 - Introduction to Python" and course description 
           course_result_information_div.appendChild(course_txt);
@@ -150,8 +152,7 @@
           if (professor == null || professor.length == 0) {
             professor = "No professor information available."
           }
-          console.log("PROFESSOR");
-          console.log(professor);
+
           professor_txt.innerHTML = 'Professor' + '<br>' + professor;
           course_result_metadata_div.appendChild(professor_txt);
 
@@ -190,7 +191,7 @@
 
           var class_results = document.getElementById("class-search").value;
           var tag_results = document.getElementById("tag-search").value;
-          console.log(class_results)
+
           $.ajax({
                     url: '/search',
                     data: JSON.stringify({'class_name':class_results, 'tag_name':tag_results}),
@@ -199,24 +200,15 @@
                     success: function(response) {
                       // success
                       value = JSON.parse(response)
-                      //console.log(value)
                       results = []
-                      /*for (i in value.recommendations) {
-                        course_txt = document.createElement("p");
-                        course_txt.innerHTML = i.course
-                        description_txt = document.createElement("p");
-                        description_txt.innerHTML = i.description
-                        results.push(course_txt)
-                        results.push(description_txt)
-                      }*/
 
                       value.recommendations.forEach(function(recommendation) {
                         results.push(createRecommendationComponent(recommendation))
-                        //results.push(course_txt)
-                        //results.push(description_txt)
                       });
                         
-                      $("#results").append(results)
+                      $("#results").append(results);
+                      readMore()
+                      
 
                     },
                     error: function(error) {
@@ -224,21 +216,42 @@
                     }
                 });
         }
+
+
+        function readMore() {
+          var showChar = 100;
+          var ellipsestext = "...";
+          var moretext = "more";
+          var lesstext = "less";
+          $('.more').each(function() {
+          var content = $(this).html();
+
+          if(content.length > showChar) {
+
+            var c = content.substr(0, showChar);
+            var h = content.substr(showChar);
+
+            var html = c + '<span class="moreelipses">'+ellipsestext+'</span><span class="morecontent"><span>' + h + '</span><a href="" class="morelink">'+moretext+'</a></span>';
+
+            $(this).html(html);
+          }
+
+          });
+
+          $(".morelink").click(function(){
+            if($(this).hasClass("less")) {
+              $(this).removeClass("less");
+              $(this).html(moretext);
+            } else {
+              $(this).addClass("less");
+              $(this).html(lesstext);
+            }
+            $(this).parent().prev().toggle();
+            $(this).prev().toggle();
+            return false;
+          });
+        }
         </script>
-        <!--<div class="global-search">
-        {% if data %}
-            <h3>{{ output_message }}</h1>
-            <br>
-            <h3>Results</h3>
-        {% endif %}
-        </div>-->
-        <!--<div class="search-results">
-            {% for k,v in data %}  
-                <br>
-                <p>{{k}}</p>
-                <p>{{v}}</p>
-            {% endfor %}
-        </div>-->
         {% endblock %}
     </body>
 
