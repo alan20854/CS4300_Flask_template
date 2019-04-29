@@ -31,7 +31,7 @@ for dept in all_majors:
     for course in cornell_course_descriptions[dept]:
         course_numbers_to_description_map_for_all_majors[dept + ' ' + course['courseNumber']] = {'desc': course['description'], 
         'prof': course['professor'], 'url': course['url'], 'prerequisite': course['prerequisite'], 'offered': course['offered'], 'courseLength': course['courseLength'],
-        'title': course['courseTitle']}
+        'title': course['courseTitle'], 'crosslisted': course['crosslisted']}
 
 # Returns a list of class ids corresponding to class ids actually in the json
 # Also removes duplicate classes that the user inputs
@@ -112,6 +112,10 @@ def recommend_classes_for_class(list_class_ids, tag_list, ratio):
     for courseid, course_info in top_10_results_with_descriptions: 
         for key, value in course_info.items():
             course_info[key] = value
+            regex = re.compile('[^a-zA-Z0-9]')
+            if isinstance(value, str):
+                value = regex.sub(' ', value)
+                course_info[key] = value
         
         if course_info['prof'] != None and len(course_info['prof']) > 0:
             try: 
@@ -153,12 +157,20 @@ def get_prereq(course_info, course_codes):
 
     prereqs = []
     tokens = sentence.split(' ')
-    for i in range(len(tokens) - 1): 
-        bigram = tokens[i] + " " + tokens[i + 1]
-        print(bigram)
-        if bigram in master_course_codes_list:
-            prereqs.append(bigram)
-
+    if len(tokens) > 0:
+        for i in range(len(tokens) - 1): 
+            bigram = tokens[i] + " " + tokens[i + 1]
+            # print(bigram)
+            if bigram in master_course_codes_list:
+                prereqs.append(bigram)
+            
+        # print(prereqs)
+        # print("************")
+        # print(preprocess_class_ids(prereqs, cornell_course_descriptions))
+        for course_id in preprocess_class_ids(prereqs, cornell_course_descriptions):
+            if course_id not in prereqs:
+                prereqs+= get_prereq(course_numbers_to_description_map_for_all_majors[course_id], course_codes)
+    
     return prereqs
 
 def filter_top_20(input_lst, course_codes):
@@ -172,10 +184,21 @@ def filter_top_20(input_lst, course_codes):
 
     top_20_codes = []
     for i in range(num_courses):
-        if course_codes[i] in input_lst or course_codes[i] in prereq_list:
+        course_info = course_numbers_to_description_map_for_all_majors[course_codes[i]]
+        
+        overlap = False
+        for crosslisted_code in course_info['crosslisted']:
+            if crosslisted_code in input_lst or crosslisted_code in prereq_list:
+                overlap = True
+
+        if course_codes[i] in input_lst or course_codes[i] in prereq_list or overlap:
             continue
         top_20_codes.append(course_codes[i])
         
     return top_20_codes
 
-print(recommend_classes_for_class(['CS 3110'], ['statistics'], 1.0))
+# for key, value in recommend_classes_for_class(['CS 4820'], ['statistics'], 0.0):
+#     print(key)
+#     print(value)
+#     print("**************************************")
+# print(recommend_classes_for_class(['CS 3110'], ['statistics'], 0.0))
