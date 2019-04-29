@@ -15,9 +15,9 @@ vectorizer = pkl.load(open("./app/irsystem/models/vectorizer.pkl", "rb"))
 X = pkl.load(open("./app/irsystem/models/tdm.pkl", "rb"))
 corpus = pkl.load(open("./app/irsystem/models/corpus.pkl", "rb"))
 course_codes  = pkl.load(open("./app/irsystem/models/course_codes_II.pkl", "rb"))
-prof_ratings = pkl.load(open('../../../data/ratemyprofessor/prof_ratings.p', 'rb'))
+prof_ratings = pkl.load(open('./data/ratemyprofessor/prof_ratings.p', 'rb'))
 
-with io.open("../../../data/courseroster/full_json.json", encoding='utf-8') as f:
+with io.open("./data/courseroster/full_json.json", encoding='utf-8') as f:
     cornell_course_descriptions = json.load(f)
 
 all_majors = list(cornell_course_descriptions.keys())
