@@ -11,22 +11,31 @@ import io
 # course_codes  = pkl.load(open("../../../app/irsystem/models/course_codes.pkl", "rb"))
 # master_course_codes_list =  pkl.load(open("../../../data/courseroster/course_codes_II.pkl", "rb"))
 
+def ascii_encode_dict(data):
+    ascii_encode = lambda x: x.encode('ascii')
+    return dict(map(ascii_encode, pair) for pair in data.items())
+
 vectorizer = pkl.load(open("./app/irsystem/models/vectorizer.pkl", "rb"))
 X = pkl.load(open("./app/irsystem/models/tdm.pkl", "rb"))
 course_codes  = pkl.load(open("./app/irsystem/models/course_codes.pkl", "rb"))
 master_course_codes_list =  pkl.load(open("./data/courseroster/course_codes_II.pkl", "rb"))
 prof_ratings = pkl.load(open('./data/ratemyprofessor/prof_ratings.p', 'rb'))
 
-with io.open("./data/courseroster/full_json.json", encoding='utf-8') as f:
+
+with open("./data/courseroster/full_json.json", encoding='utf-8') as f:
     cornell_course_descriptions = json.load(f)
 
 all_majors = list(cornell_course_descriptions.keys())
 course_numbers_to_description_map_for_all_majors = {}
 for dept in all_majors:
     for course in cornell_course_descriptions[dept]:
+        #print("LALALALA", course['description'])
+        
         course_numbers_to_description_map_for_all_majors[dept + ' ' + course['courseNumber']] = {'desc': course['description'], 
-        'prof': course['professor'], 'prerequisite': course['prerequisite'], 'offered': course['offered'], 'length': course['courseLength'],
+        'prof': course['professor'], 'url': course['url'], 'prerequisite': course['prerequisite'], 'offered': course['offered'], 'length': course['courseLength'],
         'title': course['courseTitle']}
+        #print('LOLOL', course_numbers_to_description_map_for_all_majors[dept + ' ' + course['courseNumber']]['desc'])
+
 
 
 # Returns a list of class ids corresponding to class ids actually in the json
@@ -47,9 +56,6 @@ def preprocess_class_ids(list_class_ids, cornell_course_descriptions):
     return result_list_class_ids
 
 def recommend_classes_for_class(list_class_ids, tag_list, ratio):
-    print('a', list_class_ids)
-    print('b', tag_list)
-    print("ratio", ratio)
     '''
     n = integer
     returns: [('CS 3110', description), ('CS 4820', description), ('CS 2112', description)]
@@ -67,18 +73,18 @@ def recommend_classes_for_class(list_class_ids, tag_list, ratio):
             dept = split_course_id[0]
             course_number = split_course_id[1]
             classes_representation += ' ' +  (course_numbers_to_description_map_for_all_majors[dept + ' ' + course_number]['desc'])
+            #print("REPRESENTATION", classes_representation)
+            break;
         test_x = vectorizer.transform([classes_representation])
         sim_scores_from_classes = cosine_similarity(X, test_x).flatten()
         ranked_scores_from_classes = np.sort(sim_scores_from_classes)[::-1]
         ranked_indices = np.argsort(sim_scores_from_classes)[::-1]
-        print(ranked_indices)
-        print(course_codes[1080])
+
         for i in range(len(ranked_scores_from_classes)):
             if ranked_scores_from_classes[i]< similarity_score_cutoff:
                 ranked_indices = ranked_indices[0:i]
                 break
         ranked_course_codes = [course_codes[x] for x in ranked_indices]
-        print(ranked_course_codes)
 
         top_similar_classes = filter_top_20(list_class_ids, ranked_course_codes) 
 
@@ -107,14 +113,12 @@ def recommend_classes_for_class(list_class_ids, tag_list, ratio):
     top_10_results = apply_slider_priority(ratio, top_similar_classes, top_similar_classes_tags)
 
     top_10_results_with_descriptions = [(similar_class, course_numbers_to_description_map_for_all_majors[similar_class]) for similar_class in top_10_results]
+    print("************************TOP 10,", top_10_results_with_descriptions)
 
     rank_by_rating = []
     for courseid, course_info in top_10_results_with_descriptions: 
         for key, value in course_info.items():
-            regex = re.compile('[^a-zA-Z ]')
-            if isinstance(value, str):
-                value = regex.sub(' ', value)
-                course_info[key] = value
+            course_info[key] = value
         
         if course_info['prof'] != None and len(course_info['prof']) > 0:
             try: 
@@ -128,13 +132,11 @@ def recommend_classes_for_class(list_class_ids, tag_list, ratio):
                 instructor_rating = 3
             rank_by_rating.append((courseid, course_info, instructor_rating))
     final_ranking = [(similar_class, info) for similar_class, info,_ in rank_by_rating]
+
     return final_ranking
 
 # Priority 0 is all classes, and priority 1.0 is all tags
 def apply_slider_priority(priority, course_recommendations, tag_recommendations):
-    print(course_recommendations)
-    print("******")
-    print(tag_recommendations)
     num_recommendations = min(10, len(course_recommendations + tag_recommendations))
     final_recommendations = []
     for i in range(num_recommendations):
@@ -162,8 +164,7 @@ def get_prereq(course_info, course_codes):
         bigram = tokens[i] + " " + tokens[i + 1]
         if bigram in master_course_codes_list:
             prereqs.append(bigram)
-    print(prereqs)
-    print("------------------")
+
     return prereqs
 
 def filter_top_20(input_lst, course_codes):

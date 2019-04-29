@@ -51,15 +51,15 @@
           <div id = "advanced-search-options">
             <div id = "slider-container">
               <div id = "slider-text">
-                <p>Priotize classes or topics:</p>
+                <p>Prioritize classes or topics:</p>
               </div>
 
               <div id = "slider-choices">
                 <div id = "slider-choices-1">
-                  <p> classes</p>
+                  <p> Classes</p>
                 </div>
                 <div id = "slider-choices-2">
-                  <p> topics</p>
+                  <p> Topics</p>
                 </div>
               </div>
 
@@ -77,10 +77,10 @@
           var handle = $( "#custom-handle" );
           $( "#slider" ).slider({
             create: function() {
-              handle.text( $( this ).slider( "value" ) );
+              //handle.text( $( this ).slider( "value" ) );
             },
             slide: function( event, ui ) {
-              handle.text( ui.value );
+              // handle.text( ui.value );
             }
           });
         } );
@@ -163,6 +163,7 @@
         }
         // Creates a div to hold everything to do with a recommenation
         function createRecommendationComponent(recommendation) {
+          console.log("RECOMMENDATOIN", recommendation);
           let course = recommendation.course;
           let description = recommendation.description;
           let title = recommendation.title;
@@ -171,24 +172,32 @@
           let isReplacementRating = JSON.parse(recommendation.replacementRating);
           let offered = recommendation.offered;
           let length = recommendation.length;
+          let prerequisite = recommendation.prerequisite;
+          let url = "https://classes.cornell.edu/browse/roster/FA18/class/CS/1110";
           
           let courseDept = course.split(' ')[0];
-          console.log(courseDept);
-
 
           // Main div
           course_result = document.createElement("div");
           course_result.className = "course-result-div";
-          
 
           // First child div
           course_result_information_div = document.createElement("div");
           course_result_information_div.className = "course-result-information-div";
 
-          course_txt = document.createElement("p");
-          course_txt.innerHTML = course
+          course_image = document.createElement("i");
+          course_image.className = getIconForMajor(courseDept) + " icon";
 
-          description_txt = document.createElement("p");
+          right_container = document.createElement("div");
+          right_container.className = "right-container";
+
+
+          course_txt = document.createElement("div");
+          course_txt.className = "course-text";
+          course_txt.innerHTML = "<a href = '" + url + "' + target='_blank'>" +  course + "</a>";
+
+          right_container.appendChild(course_txt);
+
           if (description == null || description.length == 0) {
               description = "No course description available."
           }
@@ -197,18 +206,16 @@
           description_txt.className = "course-description more";
           description_txt.innerHTML = description;
 
-          course_image = document.createElement("i");
-          course_image.className = getIconForMajor(courseDept);
+          right_container.appendChild(description_txt);
 
           // Add course title "CS1110 - Introduction to Python" and course description 
           course_result_information_div.appendChild(course_image);
-          course_result_information_div.appendChild(course_txt);
-          course_result_information_div.appendChild(description_txt);
+          course_result_information_div.appendChild(right_container);
 
 
           // Second child div
           course_result_metadata_div = document.createElement("div");
-          course_result_metadata_div.className = "course-result-metadata-div";
+          course_result_metadata_div.className = "course-result-metadata-div more-toggle";
 
           // Professor
           professor_txt = document.createElement("p");
@@ -216,7 +223,7 @@
             professor = "No professor information available."
           }
 
-          professor_txt.innerHTML = 'Professor' + '<br>' + professor;
+          professor_txt.innerHTML = 'Professor' + '<br>' + professor[0];
           course_result_metadata_div.appendChild(professor_txt);
 
           // Rating
@@ -239,12 +246,19 @@
           course_length_txt.innerHTML = 'Course is: ' + length + ' weeks';
           course_result_metadata_div.appendChild(course_length_txt);
 
-
-         
+          // prerequisite
+         course_prerequisite_txt = document.createElement("p");
+         if (prerequisite == "" || prerequisite == null) {
+          course_prerequisite_txt.innerHTML = 'Prerequisites: None';
+         }
+         else {
+          course_prerequisite_txt.innerHTML = 'Prequisites: ' + prerequisite;
+         } 
+         course_result_metadata_div.appendChild(course_prerequisite_txt);
 
           // Add two child divs to parent div
+          course_result_information_div.appendChild(course_result_metadata_div);
           course_result.appendChild(course_result_information_div);
-          course_result.appendChild(course_result_metadata_div);
           return course_result;
         }
 

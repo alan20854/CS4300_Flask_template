@@ -1,7 +1,8 @@
 body {
 padding-top: 15%;
 padding-bottom: 15px;
-background-image: url("background.jpg");
+background: url("background.jpg") no-repeat center center fixed;
+background-size: cover;
 }
 
 p .courseResult {
@@ -42,8 +43,10 @@ padding: 10px;
 }
 
 .course-result-information-div {
-	flex: 0 0 75%;
-	padding: 5px;
+padding: 5px;
+width: 100%;
+display: flex;
+border: 2px solid red;
 }
 
 .course-result-metadata-div {
@@ -101,6 +104,7 @@ a .morelink {
 
 #slider-container {
 	/* background-color: orange; */
+	margin-top: 20px;
 	width: 200px;
 	height: 60px;
 }
@@ -121,7 +125,45 @@ a .morelink {
 	float: right;
 }
 
-.i {
+.icon {
 	width: 50px;
 	height: 50px;
+	flex: 0 1 50%;
+	max-width: 30%;
+	border: 1px solid yellow;
+}
+
+
+.right-container {
+	flex: 0 1 100%;
+	display: flex;
+	flex-direction: column;
+	max-width: 100%;
+	flex-wrap: wrap;
+	align-items: flex-start;
+}
+
+.course-text {
+	max-height: 20%;
+	min-height: 10%;
+	max-width: 100%;
+	background: #0BDA51;
+	border: 1px solid red;
+	padding: .5em;
+	overflow: hidden;
+}
+
+.course_description {
+	flex: 0 0 100%;
+	min-height: 20%;
+	min-width: 100%;
+	max-width: 100%;
+	background: #0BDA51;
+	border: 1px solid red;
+	padding: .5em;
+	overflow: hidden;
+}
+
+.more-toggle {
+	display: None;
 }

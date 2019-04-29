@@ -42,6 +42,8 @@ def search():
 			class_dict["replacementRating"] = v['replacementRating']
 			class_dict["offered"] = v['offered']
 			class_dict["length"] = v['length']
+			class_dict["url"] = v['url']
+			class_dict["prerequisite"] = v['prerequisite']
 			json_dict['recommendations'].append(class_dict)
 		return(json.dumps(json_dict))
 
