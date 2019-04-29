@@ -63,7 +63,7 @@ def create_map(json):
     classsec = c['enrollGroups'][0]['classSections'][0]
     data['professor'] = []
     try: 
-      data['prerequisite'] = c['Prerequisite'] 
+      data['prerequisite'] = c['catalogPrereqCoreq'] 
     except: 
       data['prerequisite'] = None
 
