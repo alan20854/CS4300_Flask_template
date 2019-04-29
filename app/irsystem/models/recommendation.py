@@ -42,6 +42,6 @@ def recommend_n_classes_for_class(class_id, n):
     top_n_similar_classes_and_descriptions = [(similar_class, course_numbers_to_description_map_for_eng_majors[similar_class]) for similar_class in top_n_similar_classes]
     return top_n_similar_classes_and_descriptions
 
-print(recommend_n_classes_for_class('CS 3110', 5))
+#print(recommend_n_classes_for_class('CS 3110', 5))
 
 

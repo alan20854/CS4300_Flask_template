@@ -1,29 +1,56 @@
-@media (min-width: 1200px) {
-.container {
-    max-width: 970px;
-}
-}
-@media (min-width:400px){
-.global-search {
-padding: 20px 0;
-text-align:center;
-}
 body {
 padding-top: 15%;
 padding-bottom: 15px;
+background-color: #B31B1B;
 }
-.global-search {
-text-align:center;
-padding:10px;
+
+p .courseResult {
+	color:white;
 }
-.global-search .form-control {
-width:500px;
+
+.dropdown-bar {
+width: 400px !important;
+max-width: 600px !important;
+margin-left: 10px;
+margin-right: 10px;
+flex-grow: 0;
 }
-.global-search * {
-display:inline-block;
-margin-bottom:0;
+
+#search-inputs-flex-container {
+width: 800px;
+margin: 0 auto;
+display:flex;
 }
+
+
+
+#search-button {
+border: 1px solid #000;
+flex-grow: 0;
+flex: 0;
+max-height: 25px;
 }
+
+.course-result-div {
+margin: 5px auto;
+background-color:#f7f7f7;
+max-width:75%;
+width:50%;
+display: flex;
+border-radius: 25px;
+padding: 10px;
+}
+
+.course-result-information-div {
+	flex: 0 0 75%;
+	padding: 5px;
+}
+
+.course-result-metadata-div {
+	flex: 1;
+	padding: 5px;
+}
+
 .topcorner{
 position:absolute;
 top:2%;
