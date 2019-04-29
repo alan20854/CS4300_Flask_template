@@ -27,19 +27,40 @@ for dept in all_majors:
         'prof': course['professor'], 'prerequisite': course['prerequisite'], 'offered': course['offered'], 'length': course['courseLength'],
         'title': course['courseTitle']}
 
+
+# Returns a list of class ids corresponding to class ids actually in the json
+# Also removes duplicate classes that the user inputs
+def preprocess_class_ids(list_class_ids, cornell_course_descriptions):
+    # dept code like CS, or INFO
+    all_majors = list(cornell_course_descriptions.keys())
+    result_list_class_ids = []
+
+    for class_id in list_class_ids:
+        for dept in all_majors:
+            for course in cornell_course_descriptions[dept]:
+                crosslisted_courses = course['crosslisted']
+                full_course_code = dept + ' ' + course['courseNumber']
+                if full_course_code == "ENGRD 2110":
+                    print("HAAAAAAA")
+                # If class_id matches a class in the list of cross listed or the current class
+                if class_id in crosslisted_courses or class_id == full_course_code:
+                    result_list_class_ids.append(full_course_code)
+    print(list_class_ids)
+    print(result_list_class_ids)
+    return result_list_class_ids
+
 def recommend_classes_for_class(list_class_ids, tag_list):
     '''
-    class_id = 'CS 2110' for example
     n = integer
     returns: [('CS 3110', description), ('CS 4820', description), ('CS 2112', description)]
     '''
     # A combined string of each class's description
 
-    print(prof_ratings['Daisy Fan'])
-
     top_n_similar_classes_and_descriptions = []
 
     top_n_similar_classes_and_descriptions_tags = []
+
+    list_class_ids = preprocess_class_ids(list_class_ids, cornell_course_descriptions)
 
     if list_class_ids != []:
         classes_representation = ""
@@ -101,8 +122,8 @@ def recommend_classes_for_class(list_class_ids, tag_list):
                 value = regex.sub(' ', value)
                 course_info[key] = value
         
-        print(type(course_info['prof']))
-        print(course_info['prof'])
+        #print(type(course_info['prof']))
+        #print(course_info['prof'])
         if course_info['prof'] != None and len(course_info['prof']) > 0:
             try: 
                 instructor_rating = prof_ratings[course_info['prof'][0]]
