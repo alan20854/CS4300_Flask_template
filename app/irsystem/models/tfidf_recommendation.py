@@ -9,7 +9,9 @@ import io
 vectorizer = pkl.load(open("vectorizer.pkl", "rb"))
 X = pkl.load(open("tdm.pkl", "rb"))
 corpus = pkl.load(open("corpus.pkl", "rb"))
-course_codes  = pkl.load(open("../../../data/courseroster/course_codes_II.pkl", "rb"))
+course_codes  = pkl.load(open("../../../app/irsystem/models/course_codes.pkl", "rb"))
+master_course_codes_list =  pkl.load(open("../../../data/courseroster/course_codes_II.pkl", "rb"))
+
 
 # vectorizer = pkl.load(open("./app/irsystem/models/vectorizer.pkl", "rb"))
 # X = pkl.load(open("./app/irsystem/models/tdm.pkl", "rb"))
@@ -154,7 +156,7 @@ def get_prereq(course_info, course_codes):
     tokens = sentence.split(' ')
     for i in range(len(tokens) - 1): 
         bigram = tokens[i] + " " + tokens[i + 1]
-        if bigram in course_codes:
+        if bigram in master_course_codes_list:
             prereqs.append(bigram)
     print(prereqs)
     print("------------------")
