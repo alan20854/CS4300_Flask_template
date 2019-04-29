@@ -124,8 +124,7 @@ def apply_slider_priority(priority, course_recommendations, tag_recommendations)
     num_recommendations = min(10, len(course_recommendations + tag_recommendations))
     final_recommendations = []
     for i in range(num_recommendations):
-        choice = random.choices([0,1], [100-priority, priority])
-        if choice == 1:
+        if random.random() <= priority: 
             try:
                 final_recommendations.append(tag_recommendations.pop(0))
             except:
