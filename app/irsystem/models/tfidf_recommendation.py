@@ -29,14 +29,9 @@ all_majors = list(cornell_course_descriptions.keys())
 course_numbers_to_description_map_for_all_majors = {}
 for dept in all_majors:
     for course in cornell_course_descriptions[dept]:
-        #print("LALALALA", course['description'])
-       #print(course.keys())
         course_numbers_to_description_map_for_all_majors[dept + ' ' + course['courseNumber']] = {'desc': course['description'], 
         'prof': course['professor'], 'url': course['url'], 'prerequisite': course['prerequisite'], 'offered': course['offered'], 'courseLength': course['courseLength'],
         'title': course['courseTitle']}
-        #print('LOLOLLLL', course_numbers_to_description_map_for_all_majors[dept + ' ' + course['courseNumber']]['courseLength'])
-
-
 
 # Returns a list of class ids corresponding to class ids actually in the json
 # Also removes duplicate classes that the user inputs
@@ -73,7 +68,6 @@ def recommend_classes_for_class(list_class_ids, tag_list, ratio):
             dept = split_course_id[0]
             course_number = split_course_id[1]
             classes_representation += ' ' +  (course_numbers_to_description_map_for_all_majors[dept + ' ' + course_number]['desc'])
-            #print("REPRESENTATION", classes_representation)
             break;
         test_x = vectorizer.transform([classes_representation])
         sim_scores_from_classes = cosine_similarity(X, test_x).flatten()
@@ -113,7 +107,6 @@ def recommend_classes_for_class(list_class_ids, tag_list, ratio):
     top_10_results = apply_slider_priority(ratio, top_similar_classes, top_similar_classes_tags)
 
     top_10_results_with_descriptions = [(similar_class, course_numbers_to_description_map_for_all_majors[similar_class]) for similar_class in top_10_results]
-    print("************************TOP 10,", top_10_results_with_descriptions)
 
     rank_by_rating = []
     for courseid, course_info in top_10_results_with_descriptions: 
@@ -183,5 +176,3 @@ def filter_top_20(input_lst, course_codes):
         top_20_codes.append(course_codes[i])
         
     return top_20_codes
-
-print(recommend_classes_for_class(['CS 2110'], ['statistics'], 1.0))
