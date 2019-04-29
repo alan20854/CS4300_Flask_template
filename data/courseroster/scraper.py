@@ -137,7 +137,7 @@ def add_crosslisted(courses_json, course_info):
   for _, courses in courses_json.items():
     for c in courses:
       if course_info['courseTitle'] == c['courseTitle']:
-        c['crosslisted'].append(course_info['subject'])
+        c['crosslisted'].append(course_info['subject'] + " " + course_info['courseNumber'])
 
     
 def filter_crosslisted(courses_dict):
