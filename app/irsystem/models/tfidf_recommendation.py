@@ -45,10 +45,6 @@ def preprocess_class_ids(list_class_ids, cornell_course_descriptions):
                     result_list_class_ids.append(full_course_code)
     return result_list_class_ids
 
-
-def someFunction(ratio, list_1, list_2):
-    return list_1[0:10]
-
 def recommend_classes_for_class(list_class_ids, tag_list):
     '''
     n = integer
@@ -92,7 +88,7 @@ def recommend_classes_for_class(list_class_ids, tag_list):
         top_20_tag_indices = np.argsort(sim_scores_from_tags)[::-1][0:20]
         top_similar_classes_tags = [course_codes[x] for x in top_20_tag_indices]
     ratio = 0.5
-    top_10_results = someFunction(ratio, top_similar_classes, top_similar_classes_tags)
+    top_10_results = apply_slider_priority(ratio, top_similar_classes, top_similar_classes_tags)
 
     top_10_results_with_descriptions = [(similar_class, course_numbers_to_description_map_for_all_majors[similar_class]) for similar_class in top_10_results]
 
@@ -118,6 +114,7 @@ def recommend_classes_for_class(list_class_ids, tag_list):
     final_ranking = [(similar_class, info) for similar_class, info,_ in rank_by_rating]
     return final_ranking
 
+# Priority 0 is all classes, and priority 100 is all tags
 def apply_slider_priority(priority, course_recommendations, tag_recommendations):
     num_recommendations = min(10, len(course_recommendations + tag_recommendations))
     final_recommendations = []
