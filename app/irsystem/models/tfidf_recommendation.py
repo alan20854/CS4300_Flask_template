@@ -8,13 +8,13 @@ import io
 
 # vectorizer = pkl.load(open("vectorizer.pkl", "rb"))
 # X = pkl.load(open("tdm.pkl", "rb"))
-# corpus = pkl.load(open("corpus.pkl", "rb"))
-# course_codes  = pkl.load(open("../../../data/courseroster/course_codes_II.pkl", "rb"))
+# course_codes  = pkl.load(open("../../../app/irsystem/models/course_codes.pkl", "rb"))
+# master_course_codes_list =  pkl.load(open("../../../data/courseroster/course_codes_II.pkl", "rb"))
 
 vectorizer = pkl.load(open("./app/irsystem/models/vectorizer.pkl", "rb"))
 X = pkl.load(open("./app/irsystem/models/tdm.pkl", "rb"))
-corpus = pkl.load(open("./app/irsystem/models/corpus.pkl", "rb"))
-course_codes  = pkl.load(open("./app/irsystem/models/course_codes_II.pkl", "rb"))
+course_codes  = pkl.load(open("./app/irsystem/models/course_codes.pkl", "rb"))
+master_course_codes_list =  pkl.load(open("./data/courseroster/course_codes_II.pkl", "rb"))
 prof_ratings = pkl.load(open('./data/ratemyprofessor/prof_ratings.p', 'rb'))
 
 with io.open("./data/courseroster/full_json.json", encoding='utf-8') as f:
@@ -34,7 +34,6 @@ for dept in all_majors:
 def preprocess_class_ids(list_class_ids, cornell_course_descriptions):
     # dept code like CS, or INFO
     all_majors = list(cornell_course_descriptions.keys())
-    print(all_majors)
     result_list_class_ids = []
 
     for class_id in list_class_ids:
@@ -56,8 +55,7 @@ def recommend_classes_for_class(list_class_ids, tag_list, ratio):
 
     list_class_ids = preprocess_class_ids(list_class_ids, cornell_course_descriptions)
 
-
-    similarity_score_cutoff = 0.40
+    similarity_score_cutoff = 0.20
     top_similar_classes = []
     if list_class_ids != []:
         classes_representation = ""
@@ -156,7 +154,7 @@ def get_prereq(course_info, course_codes):
     tokens = sentence.split(' ')
     for i in range(len(tokens) - 1): 
         bigram = tokens[i] + " " + tokens[i + 1]
-        if bigram in course_codes:
+        if bigram in master_course_codes_list:
             prereqs.append(bigram)
     print(prereqs)
     print("------------------")
@@ -182,3 +180,4 @@ def filter_top_20(input_lst, course_codes):
 
 
 print(recommend_classes_for_class(['CS 3110'], [], 0.5))
+print(recommend_classes_for_class(['CS 2110'], [], 0.5))
