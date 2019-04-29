@@ -40,14 +40,14 @@ def preprocess_class_ids(list_class_ids, cornell_course_descriptions):
             for course in cornell_course_descriptions[dept]:
                 crosslisted_courses = course['crosslisted']
                 full_course_code = dept + ' ' + course['courseNumber']
-                if full_course_code == "ENGRD 2110":
-                    print("HAAAAAAA")
                 # If class_id matches a class in the list of cross listed or the current class
                 if class_id in crosslisted_courses or class_id == full_course_code:
                     result_list_class_ids.append(full_course_code)
-    print(list_class_ids)
-    print(result_list_class_ids)
     return result_list_class_ids
+
+
+def someFunction(ratio, list_1, list_2):
+    return list_1[0:10]
 
 def recommend_classes_for_class(list_class_ids, tag_list):
     '''
@@ -57,11 +57,11 @@ def recommend_classes_for_class(list_class_ids, tag_list):
     # A combined string of each class's description
 
     top_n_similar_classes_and_descriptions = []
-
     top_n_similar_classes_and_descriptions_tags = []
-
     list_class_ids = preprocess_class_ids(list_class_ids, cornell_course_descriptions)
 
+
+    top_similar_classes = []
     if list_class_ids != []:
         classes_representation = ""
         for class_id in list_class_ids:
@@ -70,21 +70,12 @@ def recommend_classes_for_class(list_class_ids, tag_list):
             course_number = split_course_id[1]
             classes_representation += ' ' +  (course_numbers_to_description_map_for_all_majors[dept + ' ' + course_number]['desc'])
         test_x = vectorizer.transform([classes_representation])
-        sim_scores = cosine_similarity(X, test_x).flatten()
-        top_score_indices = np.argsort(sim_scores)[::-1][0:20]
+        sim_scores_from_classes = cosine_similarity(X, test_x).flatten()
+        print("SIM SCORES FROM CLASSES", sim_scores_from_classes)
+        top_20_score_indices = np.argsort(sim_scores_from_classes)[::-1][0:20]
+        top_similar_classes = [course_codes[x] for x in top_20_score_indices]
 
-        top_10_class_indices = []
-        prev_score = None
-        for idx in top_score_indices:
-            if sim_scores[idx] == prev_score:
-                continue
-            else:
-                prev_score = sim_scores[idx]
-                top_10_class_indices.append(idx)
-        top_7_class_indices = top_10_class_indices[0:min(len(top_10_class_indices), 7)]
-        top_similar_classes = [course_codes[x] for x in top_7_class_indices]
-        top_n_similar_classes_and_descriptions = [(similar_class, course_numbers_to_description_map_for_all_majors[similar_class]) for similar_class in top_similar_classes]
-
+    top_similar_classes_tags = []
     if tag_list != []:
         # Incorporate the tags
         classes_related_to_tags = set()
@@ -96,34 +87,23 @@ def recommend_classes_for_class(list_class_ids, tag_list):
         classes_related_to_tags_descriptions = classes_related_to_tags_descriptions[0:min(15, len(classes_related_to_tags_descriptions))]
         classes_related_to_tags_descriptions = ' '.join(classes_related_to_tags_descriptions)
         test_x_tags = vectorizer.transform([classes_related_to_tags_descriptions])
-        sim_scores_tags = cosine_similarity(X, test_x_tags).flatten()
-        top_score_tag_indices = np.argsort(sim_scores_tags)[::-1][0:20]
+        sim_scores_from_tags = cosine_similarity(X, test_x_tags).flatten()
 
-        top_10_class_tag_indices = []
-        prev_score = None
-        for idx in top_score_tag_indices:
-            if sim_scores_tags[idx] == prev_score:
-                continue
-            else:
-                prev_score = sim_scores_tags[idx]
-                top_10_class_tag_indices.append(idx)
+        top_20_tag_indices = np.argsort(sim_scores_from_tags)[::-1][0:20]
+        top_similar_classes_tags = [course_codes[x] for x in top_20_tag_indices]
+    ratio = 0.5
+    top_10_results = someFunction(ratio, top_similar_classes, top_similar_classes_tags)
 
-        top_3_class_tag_indices = top_10_class_tag_indices[0:min(len(top_10_class_tag_indices), 3)]
-        top_similar_classes_tags    = [course_codes[x] for x in top_3_class_tag_indices]
-        top_n_similar_classes_and_descriptions_tags = [(similar_class, course_numbers_to_description_map_for_all_majors[similar_class]) for similar_class in top_similar_classes_tags]
-
-    res_list = top_n_similar_classes_and_descriptions + top_n_similar_classes_and_descriptions_tags
+    top_10_results_with_descriptions = [(similar_class, course_numbers_to_description_map_for_all_majors[similar_class]) for similar_class in top_10_results]
 
     rank_by_rating = []
-    for courseid, course_info in res_list: 
+    for courseid, course_info in top_10_results_with_descriptions: 
         for key, value in course_info.items():
             regex = re.compile('[^a-zA-Z ]')
             if isinstance(value, str):
                 value = regex.sub(' ', value)
                 course_info[key] = value
         
-        #print(type(course_info['prof']))
-        #print(course_info['prof'])
         if course_info['prof'] != None and len(course_info['prof']) > 0:
             try: 
                 instructor_rating = prof_ratings[course_info['prof'][0]]
@@ -135,10 +115,7 @@ def recommend_classes_for_class(list_class_ids, tag_list):
             if instructor_rating is None:
                 instructor_rating = 3
             rank_by_rating.append((courseid, course_info, instructor_rating))
-    rank_by_rating.sort(key=lambda x : x[2], reverse=True)
-    rank_by_rating[0:min(len(rank_by_rating), 5)]
     final_ranking = [(similar_class, info) for similar_class, info,_ in rank_by_rating]
-    random.Random(1).shuffle(final_ranking)
     return final_ranking
 
 # print(recommend_classes_for_class(['CS 3110'], ['programming', 'statistics']))
