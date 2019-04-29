@@ -4,19 +4,20 @@ from sklearn.metrics.pairwise import cosine_similarity
 import numpy as np
 import random
 import re
+import io
 
 # vectorizer = pkl.load(open("vectorizer.pkl", "rb"))
 # X = pkl.load(open("tdm.pkl", "rb"))
 # corpus = pkl.load(open("corpus.pkl", "rb"))
-# course_codes  = pkl.load(open("course_codes.pkl", "rb"))
+# course_codes  = pkl.load(open("../../../data/courseroster/course_codes_II.pkl", "rb"))
 
 vectorizer = pkl.load(open("./app/irsystem/models/vectorizer.pkl", "rb"))
 X = pkl.load(open("./app/irsystem/models/tdm.pkl", "rb"))
 corpus = pkl.load(open("./app/irsystem/models/corpus.pkl", "rb"))
-course_codes  = pkl.load(open("./app/irsystem/models/course_codes.pkl", "rb"))
-prof_ratings = pkl.load(open('./data/ratemyprofessor/prof_ratings.p', 'rb'), encoding="utf-8")
+course_codes  = pkl.load(open("./app/irsystem/models/course_codes_II.pkl", "rb"))
+prof_ratings = pkl.load(open('../../../data/ratemyprofessor/prof_ratings.p', 'rb'))
 
-with open("./data/courseroster/full_json.txt") as f:
+with io.open("../../../data/courseroster/full_json.json", encoding='utf-8') as f:
     cornell_course_descriptions = json.load(f)
 
 all_majors = list(cornell_course_descriptions.keys())
@@ -53,11 +54,10 @@ def recommend_classes_for_class(list_class_ids, tag_list, ratio):
     '''
     # A combined string of each class's description
 
-    top_n_similar_classes_and_descriptions = []
-    top_n_similar_classes_and_descriptions_tags = []
     list_class_ids = preprocess_class_ids(list_class_ids, cornell_course_descriptions)
 
-    print("ratio is", ratio)
+
+    similarity_score_cutoff = 0.40
     top_similar_classes = []
     if list_class_ids != []:
         classes_representation = ""
@@ -68,8 +68,18 @@ def recommend_classes_for_class(list_class_ids, tag_list, ratio):
             classes_representation += ' ' +  (course_numbers_to_description_map_for_all_majors[dept + ' ' + course_number]['desc'])
         test_x = vectorizer.transform([classes_representation])
         sim_scores_from_classes = cosine_similarity(X, test_x).flatten()
-        top_20_score_indices = np.argsort(sim_scores_from_classes)[::-1][0:20]
-        top_similar_classes = [course_codes[x] for x in top_20_score_indices]
+        ranked_scores_from_classes = np.sort(sim_scores_from_classes)[::-1]
+        ranked_indices = np.argsort(sim_scores_from_classes)[::-1]
+        print(ranked_indices)
+        print(course_codes[1080])
+        for i in range(len(ranked_scores_from_classes)):
+            if ranked_scores_from_classes[i]< similarity_score_cutoff:
+                ranked_indices = ranked_indices[0:i]
+                break
+        ranked_course_codes = [course_codes[x] for x in ranked_indices]
+        print(ranked_course_codes)
+
+        top_similar_classes = filter_top_20(list_class_ids, ranked_course_codes) 
 
     top_similar_classes_tags = []
     if tag_list != []:
@@ -84,9 +94,15 @@ def recommend_classes_for_class(list_class_ids, tag_list, ratio):
         classes_related_to_tags_descriptions = ' '.join(classes_related_to_tags_descriptions)
         test_x_tags = vectorizer.transform([classes_related_to_tags_descriptions])
         sim_scores_from_tags = cosine_similarity(X, test_x_tags).flatten()
+        ranked_scores_from_tags = np.sort(sim_scores_from_tags)[::-1]
+        ranked_tag_indices = np.argsort(sim_scores_from_tags)[::-1]
+        for i in range(len(ranked_scores_from_tags)):
+            if sim_scores_from_tags[i]< similarity_score_cutoff:
+                ranked_tag_indices = ranked_tag_indices[0:i]
+                break
+        ranked_similar_classes_tags = [course_codes[x] for x in ranked_tag_indices]
+        top_similar_classes_tags = filter_top_20(tag_list, ranked_similar_classes_tags) 
 
-        top_20_tag_indices = np.argsort(sim_scores_from_tags)[::-1][0:20]
-        top_similar_classes_tags = [course_codes[x] for x in top_20_tag_indices]
     top_10_results = apply_slider_priority(ratio, top_similar_classes, top_similar_classes_tags)
 
     top_10_results_with_descriptions = [(similar_class, course_numbers_to_description_map_for_all_majors[similar_class]) for similar_class in top_10_results]
@@ -130,4 +146,39 @@ def apply_slider_priority(priority, course_recommendations, tag_recommendations)
                 final_recommendations.append(tag_recommendations.pop(0))               
 
     return final_recommendations
-# print(recommend_classes_for_class(['CS 3110'], ['programming', 'statistics']))
+
+def get_prereq(course_info, course_codes):
+    sentence = course_info['prerequisite']
+    # regex = re.compile('\b')
+    # sentence = regex.sub(' ', sentence)
+
+    prereqs = []
+    tokens = sentence.split(' ')
+    for i in range(len(tokens) - 1): 
+        bigram = tokens[i] + " " + tokens[i + 1]
+        if bigram in course_codes:
+            prereqs.append(bigram)
+    print(prereqs)
+    print("------------------")
+    return prereqs
+
+def filter_top_20(input_lst, course_codes):
+    num_courses = min(20, len(course_codes))
+    prereq_list = []
+
+    for input_course_id in input_lst:
+        if input_course_id in course_codes:
+            course_info = course_numbers_to_description_map_for_all_majors[input_course_id]
+            prereq_list += get_prereq(course_info, course_codes)
+
+    top_20_codes = []
+    for i in range(num_courses):
+        if course_codes[i] in input_lst or course_codes[i] in prereq_list:
+            continue
+        top_20_codes.append(course_codes[i])
+        
+    return top_20_codes
+        
+
+
+print(recommend_classes_for_class(['CS 3110'], [], 0.5))
