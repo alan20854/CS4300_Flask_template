@@ -100,7 +100,7 @@ a .morelink {
 }
 
 #slider-container {
-	background-color: orange;
+	/* background-color: orange; */
 	width: 200px;
 	height: 60px;
 }

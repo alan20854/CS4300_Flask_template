@@ -33,6 +33,7 @@ for dept in all_majors:
 def preprocess_class_ids(list_class_ids, cornell_course_descriptions):
     # dept code like CS, or INFO
     all_majors = list(cornell_course_descriptions.keys())
+    print(all_majors)
     result_list_class_ids = []
 
     for class_id in list_class_ids:

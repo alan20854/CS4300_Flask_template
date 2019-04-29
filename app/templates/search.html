@@ -6,6 +6,7 @@
         <link rel="stylesheet" href="/static/bootstrap.min.css">
         <link href="./static/css/custom.css" rel="stylesheet">
         <link rel="stylesheet" href="/static/main.css">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
     </head>
     <body>
         <!-- jQuery library -->
@@ -156,7 +157,10 @@
         });
 
        
-
+        function getIconForMajor(dept) {
+          let majorToIconMapping = {"HADM": "fas fa-hotel", "ENGRG": "fas fa-cogs", "ENGRC": "fas fa-cogs", "BIOEE": "fas fa-biohazard", "BIOG": "fas fa-seedling", "LATA": "fas fa-language", "ESS": "fas fa-tree", "ART": "fas fa-palette", "PORT": "fas fa-language", "TIBET": "fas fa-language", "ANSC": "fas fa-hippo", "VIEN": "fas fa-wine-glass-alt", "LAW": "fas fa-university", "ECON": "fas fa-money-check-alt", "MILS": "fas fa-fighter-jet", "NS": "fas fa-hamburger", "PUNJ": "fas fa-language", "AMST": "fas fa-flag-usa", "FGSS": "fas fa-venus-double", "ENTOM": "fas fa-spider", "KHMER": "fas fa-language", "SPAN": "fas fa-language", "PHIL": "fas fa-language", "SNLIT": "fas fa-language", "PMA": "fas fa-video-slash", "AGSCI": "fas fa-tractor", "ITAL": "fas fa-language", "MAE": "fas fa-hammer", "BIOMG": "fas fa-dna", "VTPMD": "fas fa-dog", "CHIN": "fas fa-language", "CRP": "fas fa-city", "LATIN": "fas fa-language", "CEE": "fas fa-road", "DUTCH": "fas fa-language", "ILRLE": "fas fa-briefcase", "NMI": "fas fa-tasks", "DSOC": "fas fa-people-carry", "VETMM": "fas fa-dog", "MATH": "fas fa-square-root-alt", "NBAY": "fas fa-business-time", "ENMGT": "fas fa-business-time", "RUSSL": "fas fa-language", "PLSCI": "fas fa-seedling", "COML": "fas fa-book", "BTRY": "fas fa-dice", "AEM": "fas fa-business-time", "NTRES": "fas fa-gas-pump", "HE": "fas fa-biohazard", "LGBT": "fas fa-equals", "PLBIO": "fas fa-seedling", "BEE": "fas fa-seedling", "BENGL": "fas fa-language", "TECH": "fas fa-sim-card", "SINHA": "fas fa-language", "AEP": "fas fa-atom", "BSOC": "fas fa-tree", "IM": "fas fa-male", "GRAD": "fas fa-search", "PAM": "fas fa-briefcase", "CHEME": "fas fa-atom", "WRIT": "fas fa-pencil-alt", "NRE": "fas fa-search", "TOX": "fas fa-search", "LING": "fas fa-microphone-alt", "ARTH": "fas fa-paint-brush", "RELST": "fas fa-quran", "ENGRD": "fas fa-cogs", "ARAB": "fas fa-language", "SYSEN": "fas fa-space-shuttle", "SANSK": "fas fa-language", "GOVT": "fas fa-gavel", "BIOMI": "fas fa-allergies", "NES": "fas fa-language", "NBA": "fas fa-briefcase", "NACCT": "fas fa-briefcase", "RUSSA": "fas fa-language", "ILRLR": "fas fa-history", "COLLS": "fas fa-graduation-cap", "MSE": "fas fa-sim-card", "POLSH": "fas fa-language", "BIOMS": "fas fa-allergies", "PE": "fas fa-dumbbell", "KOREA": "fas fa-language", "GREEK": "fas fa-language", "AIRS": "fas fa-space-shuttle", "GERST": "fas fa-language", "VIET": "fas fa-language", "CS": "fas fa-laptop-code", "ROMAN": "fas fa-language", "COMM": "fas fa-volume-up", "COGST": "fas fa-brain", "IARD": "fas fa-tractor", "PLHRT": "fas fa-tractor", "WOLOF": "fas fa-language", "HINDI": "fas fa-language", "INFO": "fas fa-laptop-code", "MEDVL": "fas fa-chess-rook", "ARKEO": "fas fa-skull", "CAPS": "fas fa-language", "NCC": "fas fa-briefcase", "ILRHR": "fas fa-user", "INDO": "fas fa-language", "PSYCH": "fas fa-brain", "ILRIC": "fas fa-user", "EDUC": "fas fa-book-reader", "VETCS": "fas fa-dog", "ELSO": "fas fa-sign-language", "BIOAP": "fas fa-dog", "LA": "fas fa-mountain", "ROMS": "fas fa-language", "ZULU": "fas fa-language", "ARCH": "fas fa-monument", "CZECH": "fas fa-language", "SWAHL": "fas fa-language", "PALI": "fas fa-language", "VISST": "fas fa-tv", "ENGL": "fas fa-language", "VTMED": "fas fa-dog", "THAI": "fas fa-language", "ECE": "fas fa-microchip", "LSP": "fas fa-language", "HIST": "fas fa-history", "SOC": "fas fa-democrat", "DEA": "fas fa-biohazard", "PERSN": "fas fa-language", "HD": "fas fa-baby", "STS": "fas fa-microscope", "NSE": "fas fa-biohazard", "AIIS": "fas fa-language", "ORIE": "fas fa-bezier-curve", "NAVS": "fas fa-water", "SHUM": "fas fa-user-alt", "ENGRI": "fas fa-cogs", "FSAD": "fab fa-pied-piper-hat", "FDSC": "fas fa-utensils", "ASTRO": "fas fa-meteor", "VTBMS": "fas fa-dog", "PLPPM": "fab fa-canadian-maple-leaf", "JAPAN": "fas fa-language", "PADM": "fas fa-bus", "ILRID": "fas fa-user", "PLBRG": "fas fa-seedling", "NEPAL": "fas fa-language", "CLASS": "fas fa-globe", "BURM": "fas fa-language", "CHEM": "fas fa-flask", "MGMT": "fas fa-graduation-cap", "JWST": "fas fa-hanukiah", "HEBRW": "fas fa-language", "PLSCS": "fas fa-seedling", "FREN": "fas fa-language", "LEAD": "fas fa-fist-raised", "ILRST": "fas fa-user", "ASIAN": "fas fa-globe-asia", "ASRC": "fas fa-globe-africa", "STSCI": "fas fa-superscript", "TAG": "fas fa-language", "ALS": "fas fa-tractor", "BPRE": "fas fa-building", "BME": "fas fa-pills", "ILROB": "fas fa-calendar-alt", "TAMIL": "fas fa-language", "TURK": "fas fa-language", "ANTHR": "fas fa-user", "AAS": "fas fa-globe-asia", "PHYS": "fas fa-atom", "CHLIT": "fas fa-language", "JPLIT": "fas fa-language", "YORUB": "fas fa-language", "BIONB": "fas fa-brain", "URDU": "fas fa-language", "MUSIC": "fas fa-music", "VETMI": "fas fa-dog", "EAS": "fas fa-globe"};
+          return majorToIconMapping[dept];
+        }
         // Creates a div to hold everything to do with a recommenation
         function createRecommendationComponent(recommendation) {
           let course = recommendation.course;
@@ -167,6 +171,9 @@
           let isReplacementRating = JSON.parse(recommendation.replacementRating);
           let offered = recommendation.offered;
           let length = recommendation.length;
+          
+          let courseDept = course.split(' ')[0];
+          console.log(courseDept);
 
 
           // Main div
@@ -228,9 +235,13 @@
           course_length_txt.innerHTML = 'Course is: ' + length + ' weeks';
           course_result_metadata_div.appendChild(course_length_txt);
 
+
+          course_image = document.createElement("i");
+          course_image.className = getIconForMajor(courseDept);
           // Add two child divs to parent div
           course_result.appendChild(course_result_information_div);
           course_result.appendChild(course_result_metadata_div);
+          course_result.appendChild(course_image);
           return course_result;
         }
 
