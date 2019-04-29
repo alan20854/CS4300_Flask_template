@@ -57,7 +57,7 @@ def recommend_classes_for_class(list_class_ids, tag_list, ratio):
 
     list_class_ids = preprocess_class_ids(list_class_ids, cornell_course_descriptions)
 
-    similarity_score_cutoff = 0.40
+    similarity_score_cutoff = 0.20
     top_similar_classes = []
     if list_class_ids != []:
         classes_representation = ""
@@ -129,7 +129,7 @@ def recommend_classes_for_class(list_class_ids, tag_list, ratio):
     final_ranking = [(similar_class, info) for similar_class, info,_ in rank_by_rating]
     return final_ranking
 
-# Priority 0 is all classes, and priority 100 is all tags
+# Priority 0 is all classes, and priority 1.0 is all tags
 def apply_slider_priority(priority, course_recommendations, tag_recommendations):
     num_recommendations = min(10, len(course_recommendations + tag_recommendations))
     final_recommendations = []
@@ -182,3 +182,4 @@ def filter_top_20(input_lst, course_codes):
 
 
 print(recommend_classes_for_class(['CS 3110'], [], 0.5))
+print(recommend_classes_for_class(['CS 2110'], ['statistics'], 1.0))
