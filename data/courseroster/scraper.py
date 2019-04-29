@@ -2,9 +2,12 @@ from urllib import request
 import json
 import csv
 import pickle
+import io
 engineering_subs = ['AEP', 'BME', 'CHEME', 'CEE', 'CS', 'EAS', 
 'ECE', 'ENGRC', 'ENGRD', 'ENGRG', 'ENGRI', 'INFO', 'MSE', 'MAE',
 'NSE', 'ORIE', 'STSCI', 'SYSEN']
+
+course_codes = []
 
 def scrape(roster="SP19", subject="CS"):
   """
@@ -60,10 +63,11 @@ def create_map(json):
 
     data['outcomes'] = outcomes
     data['subject'] = c['subject']
+    course_codes.append(data['subject'] + " " + data['courseNumber'])
     classsec = c['enrollGroups'][0]['classSections'][0]
     data['professor'] = []
     try: 
-      data['prerequisite'] = c['catalogPrereqCoreq'] 
+      data['prerequisite'] = c['catalogPrereqCoreq']
     except: 
       data['prerequisite'] = None
 
@@ -209,9 +213,13 @@ for sub in subjects:
   full_json[sub] = sp_json
   
 full_json = filter_crosslisted(full_json)
+# print(full_json)
 
-with open('full_json.txt', 'w') as output:
-  json.dump(full_json, output)
+with io.open('full_json.json', 'w', encoding='utf-8') as output:
+  json.dump(full_json, output, ensure_ascii=False)
+
+with open('course_codes_II.pkl', 'wb') as f:
+  pickle.dump(course_codes, f)
 
 # with open('cs_json.txt', 'w') as output:
 #   json.dump(cs_json, output)
