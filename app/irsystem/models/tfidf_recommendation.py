@@ -67,7 +67,6 @@ def recommend_classes_for_class(list_class_ids, tag_list):
             classes_representation += ' ' +  (course_numbers_to_description_map_for_all_majors[dept + ' ' + course_number]['desc'])
         test_x = vectorizer.transform([classes_representation])
         sim_scores_from_classes = cosine_similarity(X, test_x).flatten()
-        print("SIM SCORES FROM CLASSES", sim_scores_from_classes)
         top_20_score_indices = np.argsort(sim_scores_from_classes)[::-1][0:20]
         top_similar_classes = [course_codes[x] for x in top_20_score_indices]
 
@@ -87,7 +86,7 @@ def recommend_classes_for_class(list_class_ids, tag_list):
 
         top_20_tag_indices = np.argsort(sim_scores_from_tags)[::-1][0:20]
         top_similar_classes_tags = [course_codes[x] for x in top_20_tag_indices]
-    ratio = 0.5
+    ratio = 0.20
     top_10_results = apply_slider_priority(ratio, top_similar_classes, top_similar_classes_tags)
 
     top_10_results_with_descriptions = [(similar_class, course_numbers_to_description_map_for_all_majors[similar_class]) for similar_class in top_10_results]
