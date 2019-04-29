@@ -148,13 +148,14 @@ def apply_slider_priority(priority, course_recommendations, tag_recommendations)
 
 def get_prereq(course_info, course_codes):
     sentence = course_info['prerequisite']
-    # regex = re.compile('\b')
-    # sentence = regex.sub(' ', sentence)
+    regex = re.compile('[\W]')
+    sentence = regex.sub(' ', sentence)
 
     prereqs = []
     tokens = sentence.split(' ')
     for i in range(len(tokens) - 1): 
         bigram = tokens[i] + " " + tokens[i + 1]
+        print(bigram)
         if bigram in master_course_codes_list:
             prereqs.append(bigram)
 
@@ -176,3 +177,5 @@ def filter_top_20(input_lst, course_codes):
         top_20_codes.append(course_codes[i])
         
     return top_20_codes
+
+print(recommend_classes_for_class(['CS 3110'], ['statistics'], 1.0))
