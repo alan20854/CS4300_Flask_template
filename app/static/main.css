@@ -95,6 +95,28 @@ a .morelink {
 #advanced-search-options {
 	margin: 0 auto;
 	width: 500px;
-	background-color: blue;
+	/* background-color: lightblue; */
 	display: none;
+}
+
+#slider-container {
+	background-color: orange;
+	width: 200px;
+	height: 60px;
+}
+
+#slider {
+	margin-top: 7px;
+	width: 200px;
+}
+
+#slider-choices {
+	height: 10px;
+}
+
+#slider-choices-1 {
+	float: left;
+}
+#slider-choices-2 {
+	float: right;
 }

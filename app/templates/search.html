@@ -48,9 +48,24 @@
             </div>
           </div>
           <div id = "advanced-search-options">
+            <div id = "slider-container">
+              <div id = "slider-text">
+                <p>Priotize classes or topics:</p>
+              </div>
+
+              <div id = "slider-choices">
+                <div id = "slider-choices-1">
+                  <p> classes</p>
+                </div>
+                <div id = "slider-choices-2">
+                  <p> topics</p>
+                </div>
+              </div>
+
               <div id="slider">
                   <div id="custom-handle" class="ui-slider-handle"></div>
               </div>
+            </div>
           </div>
 
         <div id = "results"></div>
@@ -228,10 +243,15 @@
 
           var class_results = document.getElementById("class-search").value;
           var tag_results = document.getElementById("tag-search").value;
+          var custom_handle = document.getElementById("custom-handle");
+          var slider_value = custom_handle.style.left;
+          slider_value = slider_value.substring(0, slider_value.length - 1);
+          
+          console.log(slider_value);
 
           $.ajax({
                     url: '/search',
-                    data: JSON.stringify({'class_name':class_results, 'tag_name':tag_results}),
+                    data: JSON.stringify({'class_name':class_results, 'tag_name':tag_results, 'slider_value':slider_value}),
                     contentType: "application/json",
                     type: 'POST',
                     success: function(response) {

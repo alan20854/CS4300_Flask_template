@@ -20,6 +20,7 @@ def search():
 	if request.json:
 		class_names = request.json['class_name'].split(',')
 		tag_names = request.json['tag_name'].split(',')
+		slider_value = int(request.json['slider_value'])
 		course_ids = []
 		for i in class_names:
 			course_ids.append(i[:i.find(':')])
@@ -28,7 +29,7 @@ def search():
 		if len(tag_names) == 1 and tag_names[0] == '':
 			tag_names = []
 
-		data = Tfidf_Recommendation.recommend_classes_for_class(course_ids, tag_names)
+		data = Tfidf_Recommendation.recommend_classes_for_class(course_ids, tag_names, slider_value / 100.0)
 		json_dict = {}
 		json_dict['recommendations'] = []
 		for i in data:
