@@ -17,9 +17,7 @@
 
         <!-- Latest compiled JavaScript -->
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
-        <div class="topcorner">
-            <p>Student Names: ({{ netid }})</p>
-        </div>
+        
         <h1 style="font-weight: 500; font-size: 70px; color: #222222; text-align:center; margin-bottom: 30px;">CourseFinder</h1>
         <!--<form class="form-inline global-search" method="get" id="classform">
             
@@ -222,6 +220,7 @@
 
           // Professor
           professor_txt = document.createElement("p");
+          professor_txt.className = "other-text";
           if (professor == null || professor.length == 0) {
             professor = "No professor information available."
           }
@@ -231,6 +230,7 @@
 
           // Rating
           course_rating_txt = document.createElement("p");
+          course_rating_txt.className = "other-text";
           if (isReplacementRating || rating == null) {
             course_rating_txt.innerHTML = 'Course Rating: N/A';
           } else {
@@ -241,16 +241,19 @@
 
           // offered
           course_offered_txt = document.createElement("p");
+          course_offered_txt.className = "other-text";
           course_offered_txt.innerHTML = 'Course offered in: ' + offered;
           course_result_metadata_div.appendChild(course_offered_txt);
 
           // length
           course_length_txt = document.createElement("p");
+          course_length_txt.className = "other-text";
           course_length_txt.innerHTML = 'Course is: ' + length + ' weeks';
           course_result_metadata_div.appendChild(course_length_txt);
 
           // prerequisite
          course_prerequisite_txt = document.createElement("p");
+         course_prerequisite_txt.className = "other-text";
          if (prerequisite == "" || prerequisite == null) {
           course_prerequisite_txt.innerHTML = 'Prerequisites: None';
          }

@@ -80,18 +80,29 @@ color: #4285F4;
 	padding:10px;
 }
 
-a .moreDesclink {
-	text-decoration:none;
+.moreDesclink {
+	text-decoration:none !important;
+	color: #007bff !important;
 	outline: none;
 }
+
+a .moreDesclink:visited {
+	text-decoration: none;
+}
+
 .moreDesccontent span {
 	display: none;
 }
 
 
-a .moreMetalink {
-	text-decoration:none;
+.moreMetalink {
+	text-decoration:none !important;
+	color: #007bff !important;
 	outline: none;
+	font-size: 14px !important;
+}
+a .moreMetalink:visited {
+	text-decoration: none;
 }
 .moreMetacontent span {
 	display: none;
@@ -178,6 +189,7 @@ a .moreMetalink {
 .course-text > a {
 	text-decoration: none;
 	font-size: 18px;
+	font-weight: 500px;
 	color:#000;       
     transition: color 0.3s linear; /* vendorless fallback */
     -o-transition: color 0.3s linear; /* opera */
@@ -206,4 +218,9 @@ a .moreMetalink {
 
 .title {
 	font-weight: 700;
+}
+
+.other-text {
+	color: #000;
+	font-size: 14px;
 }
