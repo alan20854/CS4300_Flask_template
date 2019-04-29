@@ -13,16 +13,16 @@ width: 400px !important;
 max-width: 600px !important;
 margin-left: 10px;
 margin-right: 10px;
-flex-grow: 0;
+}
+
+#shit {
+	text-align: center;
 }
 
 #search-inputs-flex-container {
-width: 800px;
+display: inline-flex;
 margin: 0 auto;
-display:flex;
 }
-
-
 
 #search-button {
 border: 1px solid #000;
@@ -73,5 +73,28 @@ a .morelink {
 }
 .morecontent span {
 	display: none;
+}
 
+#advanced-search {
+	margin-left: 12px;
+	display: table;
+	white-space: nowrap;
+	height: 25px;
+	padding-bottom: 2px;
+	flex-grow: 0;
+	flex: 0;
+}
+
+#advanced-search a{
+	color: white;
+	cursor: pointer;
+	display: table-cell;
+	vertical-align: bottom;
+}
+
+#advanced-search-options {
+	margin: 0 auto;
+	width: 500px;
+	background-color: blue;
+	display: none;
 }
