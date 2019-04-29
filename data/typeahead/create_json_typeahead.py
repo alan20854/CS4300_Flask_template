@@ -24,10 +24,15 @@ def create_typeahead_json(key_name, entity_key_name, full_json):
 			json_dict[key_name].append(individual_class_dict)
 	return json_dict
 
-full_json = None
+'''full_json = None
 with open('full_json.json') as json_file:
 	full_json = json.load(json_file)
 
-json_dict = create_typeahead_json("classes", "class_name", full_json)
+print(full_json)'''
+
+'''json_dict = create_typeahead_json("classes", "class_name", full_json)
 with open('classes_typeahead.json', 'w') as outfile:
-    json.dump(json_dict, outfile)
+    json.dump(json_dict, outfile)'''
+all_courses_json = pickle.load(open('complete_typeahead_course_names.p', "rb"))
+with open('classes_typeahead.json', 'w') as outfile:
+    json.dump(all_courses_json, outfile)
