@@ -1,6 +1,7 @@
 .label-info{
     color: black !important;
     background-color: #5bc0de;
+    font-size: 11px !important;
     
 }
 .label {
@@ -8,6 +9,12 @@
   font-weight: 700;
   text-align: center;
   border-radius: 0.25em;
+}
+
+.ui-icon-background,
+.ui-state-active .ui-icon-background {
+	border: #5bc0de !important;
+	background-color: #ffffff;
 }
 
 /* For the input bar*/

@@ -3,10 +3,15 @@ padding-top: 15%;
 padding-bottom: 15px;
 background: url("background.jpg") no-repeat center center fixed;
 background-size: cover;
+font-family: "Merriweather Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue";
 }
 
 p .courseResult {
 	color:white;
+}
+
+::placeholder {
+	color: rgb(70, 70, 70);
 }
 
 .dropdown-bar {
@@ -30,13 +35,15 @@ border: 1px solid #000;
 flex-grow: 0;
 flex: 0;
 max-height: 25px;
+font-weight: 700;
+font-size: 12px;
 }
 
 .course-result-div {
 margin: 5px auto;
 background-color:#f7f7f7;
-max-width:75%;
-width:50%;
+max-width:85%;
+width:70%;
 display: flex;
 border-radius: 25px;
 padding: 10px;
@@ -45,14 +52,16 @@ margin-bottom: 20px;
 
 .course-result-information-div {
 padding: 5px;
-width: 100%;
+width: 75%;
 display: flex;
 /* border: 2px solid red; */
 }
 
 .course-result-metadata-div {
-	flex: 1;
-	padding: 5px;
+width: 25%;
+padding: 5px;
+overflow-wrap: break-word;
+word-wrap: break-word;
 }
 
 .topcorner{
@@ -71,13 +80,23 @@ color: #4285F4;
 	padding:10px;
 }
 
-a .morelink {
+a .moreDesclink {
 	text-decoration:none;
 	outline: none;
 }
-.morecontent span {
+.moreDesccontent span {
 	display: none;
 }
+
+
+a .moreMetalink {
+	text-decoration:none;
+	outline: none;
+}
+.moreMetacontent span {
+	display: none;
+}
+
 
 #advanced-search {
 	margin-left: 12px;
@@ -87,14 +106,19 @@ a .morelink {
 	padding-bottom: 2px;
 	flex-grow: 0;
 	flex: 0;
+
 }
 
 #advanced-search a{
-	color: white;
+	color: #000;
 	cursor: pointer;
 	display: table-cell;
 	vertical-align: bottom;
+	font-size: 9px;
+	font-weight: 700;
 }
+
+
 
 #advanced-search-options {
 	margin: 0 auto;
@@ -134,7 +158,6 @@ a .morelink {
 	/* border: 1px solid yellow; */
 }
 
-
 .right-container {
 	flex: 0 1 100%;
 	display: flex;
@@ -152,16 +175,35 @@ a .morelink {
 	padding: .5em;
 	overflow: hidden;
 }
+.course-text > a {
+	text-decoration: none;
+	font-size: 18px;
+	color:#000;       
+    transition: color 0.3s linear; /* vendorless fallback */
+    -o-transition: color 0.3s linear; /* opera */
+    -ms-transition: color 0.3s linear; /* IE 10 */
+    -moz-transition: color 0.3s linear; /* Firefox */
+    -webkit-transition: color 0.3s linear; /*safari and chrome */
+}
+.course-text > a:hover {
+	color: rgb(90, 90, 90);
+}
 
 .course-description {
 	padding: .5em !important;
 	overflow: hidden;
-}
-
-.more-toggle {
-	display: None;
+	font-size: 14px;
 }
 
 #results {
 	margin-top: 40px;
+}
+
+.meta-text {
+	color: #000;
+	font-size: 9px;
+}
+
+.title {
+	font-weight: 700;
 }

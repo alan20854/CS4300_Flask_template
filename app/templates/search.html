@@ -7,6 +7,9 @@
         <link href="./static/css/custom.css" rel="stylesheet">
         <link rel="stylesheet" href="/static/main.css">
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+        <link href="https://fonts.googleapis.com/css?family=Merriweather+Sans:400,700" rel="stylesheet">
+        <link href='https://fonts.googleapis.com/css?family=Merriweather:400,300,300italic,400italic,700,700italic' rel='stylesheet' type='text/css'>
+      
     </head>
     <body>
         <!-- jQuery library -->
@@ -17,7 +20,7 @@
         <div class="topcorner">
             <p>Student Names: ({{ netid }})</p>
         </div>
-        <h1 style="font-size: 55px; font-family:Futura; color: #222222; text-align:center">CourseFinder</h1>
+        <h1 style="font-weight: 500; font-size: 70px; color: #222222; text-align:center; margin-bottom: 30px;">CourseFinder</h1>
         <!--<form class="form-inline global-search" method="get" id="classform">
             
             
@@ -44,22 +47,22 @@
                 </div>-->
                 <button id="search-button" onclick="search()" type="submit">Search</button>
                 <div id = "advanced-search">
-                  <a onclick = "showAdvancedSearch()">Advanced Search</a>
+                  <a class = "advanced-search-text" onclick = "showAdvancedSearch()">Advanced Search</a>
                 </div>
             </div>
           </div>
           <div id = "advanced-search-options">
             <div id = "slider-container">
               <div id = "slider-text">
-                <p>Prioritize classes or topics:</p>
+                <p class = "meta-text title">Prioritize classes or topics:</p>
               </div>
 
               <div id = "slider-choices">
                 <div id = "slider-choices-1">
-                  <p> Classes</p>
+                  <p class = "meta-text"> Classes</p>
                 </div>
                 <div id = "slider-choices-2">
-                  <p> Topics</p>
+                  <p class = "meta-text"> Topics</p>
                 </div>
               </div>
 
@@ -158,7 +161,7 @@
 
        
         function getIconForMajor(dept) {
-          let majorToIconMapping = {"HADM": "fas fa-hotel fa-5x", "ENGRG": "fas fa-cogs fa-5x", "ENGRC": "fas fa-cogs fa-5x", "BIOEE": "fas fa-biohazard fa-5x", "BIOG": "fas fa-seedling fa-5x", "LATA": "fas fa-language fa-5x", "ESS": "fas fa-tree fa-5x", "ART": "fas fa-palette fa-5x", "PORT": "fas fa-language fa-5x", "TIBET": "fas fa-language fa-5x", "ANSC": "fas fa-hippo fa-5x", "VIEN": "fas fa-wine-glass-alt fa-5x", "LAW": "fas fa-university fa-5x", "ECON": "fas fa-money-check-alt fa-5x", "MILS": "fas fa-fighter-jet fa-5x", "NS": "fas fa-hamburger fa-5x", "PUNJ": "fas fa-language fa-5x", "AMST": "fas fa-flag-usa fa-5x", "FGSS": "fas fa-venus-double fa-5x", "ENTOM": "fas fa-spider fa-5x", "KHMER": "fas fa-language fa-5x", "SPAN": "fas fa-language fa-5x", "PHIL": "fas fa-language fa-5x", "SNLIT": "fas fa-language fa-5x", "PMA": "fas fa-video-slash fa-5x", "AGSCI": "fas fa-tractor fa-5x", "ITAL": "fas fa-language fa-5x", "MAE": "fas fa-hammer fa-5x", "BIOMG": "fas fa-dna fa-5x", "VTPMD": "fas fa-dog fa-5x", "CHIN": "fas fa-language fa-5x", "CRP": "fas fa-city fa-5x", "LATIN": "fas fa-language fa-5x", "CEE": "fas fa-road fa-5x", "DUTCH": "fas fa-language fa-5x", "ILRLE": "fas fa-briefcase fa-5x", "NMI": "fas fa-tasks fa-5x", "DSOC": "fas fa-people-carry fa-5x", "VETMM": "fas fa-dog fa-5x", "MATH": "fas fa-square-root-alt fa-5x", "NBAY": "fas fa-business-time fa-5x", "ENMGT": "fas fa-business-time fa-5x", "RUSSL": "fas fa-language fa-5x", "PLSCI": "fas fa-seedling fa-5x", "COML": "fas fa-book fa-5x", "BTRY": "fas fa-dice fa-5x", "AEM": "fas fa-business-time fa-5x", "NTRES": "fas fa-gas-pump fa-5x", "HE": "fas fa-biohazard fa-5x", "LGBT": "fas fa-equals fa-5x", "PLBIO": "fas fa-seedling fa-5x", "BEE": "fas fa-seedling fa-5x", "BENGL": "fas fa-language fa-5x", "TECH": "fas fa-sim-card fa-5x", "SINHA": "fas fa-language fa-5x", "AEP": "fas fa-atom fa-5x", "BSOC": "fas fa-tree fa-5x", "IM": "fas fa-male fa-5x", "GRAD": "fas fa-search fa-5x", "PAM": "fas fa-briefcase fa-5x", "CHEME": "fas fa-atom fa-5x", "WRIT": "fas fa-pencil-alt fa-5x", "NRE": "fas fa-search fa-5x", "TOX": "fas fa-search fa-5x", "LING": "fas fa-microphone-alt fa-5x", "ARTH": "fas fa-paint-brush fa-5x", "RELST": "fas fa-quran fa-5x", "ENGRD": "fas fa-cogs fa-5x", "ARAB": "fas fa-language fa-5x", "SYSEN": "fas fa-space-shuttle fa-5x", "SANSK": "fas fa-language fa-5x", "GOVT": "fas fa-gavel fa-5x", "BIOMI": "fas fa-allergies fa-5x", "NES": "fas fa-language fa-5x", "NBA": "fas fa-briefcase fa-5x", "NACCT": "fas fa-briefcase fa-5x", "RUSSA": "fas fa-language fa-5x", "ILRLR": "fas fa-history fa-5x", "COLLS": "fas fa-graduation-cap fa-5x", "MSE": "fas fa-sim-card fa-5x", "POLSH": "fas fa-language fa-5x", "BIOMS": "fas fa-allergies fa-5x", "PE": "fas fa-dumbbell fa-5x", "KOREA": "fas fa-language fa-5x", "GREEK": "fas fa-language fa-5x", "AIRS": "fas fa-space-shuttle fa-5x", "GERST": "fas fa-language fa-5x", "VIET": "fas fa-language fa-5x", "CS": "fas fa-laptop-code fa-5x", "ROMAN": "fas fa-language fa-5x", "COMM": "fas fa-volume-up fa-5x", "COGST": "fas fa-brain fa-5x", "IARD": "fas fa-tractor fa-5x", "PLHRT": "fas fa-tractor fa-5x", "WOLOF": "fas fa-language fa-5x", "HINDI": "fas fa-language fa-5x", "INFO": "fas fa-laptop-code fa-5x", "MEDVL": "fas fa-chess-rook fa-5x", "ARKEO": "fas fa-skull fa-5x", "CAPS": "fas fa-language fa-5x", "NCC": "fas fa-briefcase fa-5x", "ILRHR": "fas fa-user fa-5x", "INDO": "fas fa-language fa-5x", "PSYCH": "fas fa-brain fa-5x", "ILRIC": "fas fa-user fa-5x", "EDUC": "fas fa-book-reader fa-5x", "VETCS": "fas fa-dog fa-5x", "ELSO": "fas fa-sign-language fa-5x", "BIOAP": "fas fa-dog fa-5x", "LA": "fas fa-mountain fa-5x", "ROMS": "fas fa-language fa-5x", "ZULU": "fas fa-language fa-5x", "ARCH": "fas fa-monument fa-5x", "CZECH": "fas fa-language fa-5x", "SWAHL": "fas fa-language fa-5x", "PALI": "fas fa-language fa-5x", "VISST": "fas fa-tv fa-5x", "ENGL": "fas fa-language fa-5x", "VTMED": "fas fa-dog fa-5x", "THAI": "fas fa-language fa-5x", "ECE": "fas fa-microchip fa-5x", "LSP": "fas fa-language fa-5x", "HIST": "fas fa-history fa-5x", "SOC": "fas fa-democrat fa-5x", "DEA": "fas fa-biohazard fa-5x", "PERSN": "fas fa-language fa-5x", "HD": "fas fa-baby fa-5x", "STS": "fas fa-microscope fa-5x", "NSE": "fas fa-biohazard fa-5x", "AIIS": "fas fa-language fa-5x", "ORIE": "fas fa-bezier-curve fa-5x", "NAVS": "fas fa-water fa-5x", "SHUM": "fas fa-user-alt fa-5x", "ENGRI": "fas fa-cogs fa-5x", "FSAD": "fab fa-pied-piper-hat fa-5x", "FDSC": "fas fa-utensils fa-5x", "ASTRO": "fas fa-meteor fa-5x", "VTBMS": "fas fa-dog fa-5x", "PLPPM": "fab fa-canadian-maple-leaf fa-5x", "JAPAN": "fas fa-language fa-5x", "PADM": "fas fa-bus fa-5x", "ILRID": "fas fa-user fa-5x", "PLBRG": "fas fa-seedling fa-5x", "NEPAL": "fas fa-language fa-5x", "CLASS": "fas fa-globe fa-5x", "BURM": "fas fa-language fa-5x", "CHEM": "fas fa-flask fa-5x", "MGMT": "fas fa-graduation-cap fa-5x", "JWST": "fas fa-hanukiah fa-5x", "HEBRW": "fas fa-language fa-5x", "PLSCS": "fas fa-seedling fa-5x", "FREN": "fas fa-language fa-5x", "LEAD": "fas fa-fist-raised fa-5x", "ILRST": "fas fa-user fa-5x", "ASIAN": "fas fa-globe-asia fa-5x", "ASRC": "fas fa-globe-africa fa-5x", "STSCI": "fas fa-superscript fa-5x", "TAG": "fas fa-language fa-5x", "ALS": "fas fa-tractor fa-5x", "BPRE": "fas fa-building fa-5x", "BME": "fas fa-pills fa-5x", "ILROB": "fas fa-calendar-alt fa-5x", "TAMIL": "fas fa-language fa-5x", "TURK": "fas fa-language fa-5x", "ANTHR": "fas fa-user fa-5x", "AAS": "fas fa-globe-asia fa-5x", "PHYS": "fas fa-atom fa-5x", "CHLIT": "fas fa-language fa-5x", "JPLIT": "fas fa-language fa-5x", "YORUB": "fas fa-language fa-5x", "BIONB": "fas fa-brain fa-5x", "URDU": "fas fa-language fa-5x", "MUSIC": "fas fa-music fa-5x", "VETMI": "fas fa-dog fa-5x", "EAS": "fas fa-globe fa-5x"};
+          let majorToIconMapping = {"HADM": "fas fa-hotel fa-7x", "ENGRG": "fas fa-cogs fa-7x", "ENGRC": "fas fa-cogs fa-7x", "BIOEE": "fas fa-biohazard fa-7x", "BIOG": "fas fa-seedling fa-7x", "LATA": "fas fa-language fa-7x", "ESS": "fas fa-tree fa-7x", "ART": "fas fa-palette fa-7x", "PORT": "fas fa-language fa-7x", "TIBET": "fas fa-language fa-7x", "ANSC": "fas fa-hippo fa-7x", "VIEN": "fas fa-wine-glass-alt fa-7x", "LAW": "fas fa-university fa-7x", "ECON": "fas fa-money-check-alt fa-7x", "MILS": "fas fa-fighter-jet fa-7x", "NS": "fas fa-hamburger fa-7x", "PUNJ": "fas fa-language fa-7x", "AMST": "fas fa-flag-usa fa-7x", "FGSS": "fas fa-venus-double fa-7x", "ENTOM": "fas fa-spider fa-7x", "KHMER": "fas fa-language fa-7x", "SPAN": "fas fa-language fa-7x", "PHIL": "fas fa-language fa-7x", "SNLIT": "fas fa-language fa-7x", "PMA": "fas fa-video-slash fa-7x", "AGSCI": "fas fa-tractor fa-7x", "ITAL": "fas fa-language fa-7x", "MAE": "fas fa-hammer fa-7x", "BIOMG": "fas fa-dna fa-7x", "VTPMD": "fas fa-dog fa-7x", "CHIN": "fas fa-language fa-7x", "CRP": "fas fa-city fa-7x", "LATIN": "fas fa-language fa-7x", "CEE": "fas fa-road fa-7x", "DUTCH": "fas fa-language fa-7x", "ILRLE": "fas fa-briefcase fa-7x", "NMI": "fas fa-tasks fa-7x", "DSOC": "fas fa-people-carry fa-7x", "VETMM": "fas fa-dog fa-7x", "MATH": "fas fa-square-root-alt fa-7x", "NBAY": "fas fa-business-time fa-7x", "ENMGT": "fas fa-business-time fa-7x", "RUSSL": "fas fa-language fa-7x", "PLSCI": "fas fa-seedling fa-7x", "COML": "fas fa-book fa-7x", "BTRY": "fas fa-dice fa-7x", "AEM": "fas fa-business-time fa-7x", "NTRES": "fas fa-gas-pump fa-7x", "HE": "fas fa-biohazard fa-7x", "LGBT": "fas fa-equals fa-7x", "PLBIO": "fas fa-seedling fa-7x", "BEE": "fas fa-seedling fa-7x", "BENGL": "fas fa-language fa-7x", "TECH": "fas fa-sim-card fa-7x", "SINHA": "fas fa-language fa-7x", "AEP": "fas fa-atom fa-7x", "BSOC": "fas fa-tree fa-7x", "IM": "fas fa-male fa-7x", "GRAD": "fas fa-search fa-7x", "PAM": "fas fa-briefcase fa-7x", "CHEME": "fas fa-atom fa-7x", "WRIT": "fas fa-pencil-alt fa-7x", "NRE": "fas fa-search fa-7x", "TOX": "fas fa-search fa-7x", "LING": "fas fa-microphone-alt fa-7x", "ARTH": "fas fa-paint-brush fa-7x", "RELST": "fas fa-quran fa-7x", "ENGRD": "fas fa-cogs fa-7x", "ARAB": "fas fa-language fa-7x", "SYSEN": "fas fa-space-shuttle fa-7x", "SANSK": "fas fa-language fa-7x", "GOVT": "fas fa-gavel fa-7x", "BIOMI": "fas fa-allergies fa-7x", "NES": "fas fa-language fa-7x", "NBA": "fas fa-briefcase fa-7x", "NACCT": "fas fa-briefcase fa-7x", "RUSSA": "fas fa-language fa-7x", "ILRLR": "fas fa-history fa-7x", "COLLS": "fas fa-graduation-cap fa-7x", "MSE": "fas fa-sim-card fa-7x", "POLSH": "fas fa-language fa-7x", "BIOMS": "fas fa-allergies fa-7x", "PE": "fas fa-dumbbell fa-7x", "KOREA": "fas fa-language fa-7x", "GREEK": "fas fa-language fa-7x", "AIRS": "fas fa-space-shuttle fa-7x", "GERST": "fas fa-language fa-7x", "VIET": "fas fa-language fa-7x", "CS": "fas fa-laptop-code fa-7x", "ROMAN": "fas fa-language fa-7x", "COMM": "fas fa-volume-up fa-7x", "COGST": "fas fa-brain fa-7x", "IARD": "fas fa-tractor fa-7x", "PLHRT": "fas fa-tractor fa-7x", "WOLOF": "fas fa-language fa-7x", "HINDI": "fas fa-language fa-7x", "INFO": "fas fa-laptop-code fa-7x", "MEDVL": "fas fa-chess-rook fa-7x", "ARKEO": "fas fa-skull fa-7x", "CAPS": "fas fa-language fa-7x", "NCC": "fas fa-briefcase fa-7x", "ILRHR": "fas fa-user fa-7x", "INDO": "fas fa-language fa-7x", "PSYCH": "fas fa-brain fa-7x", "ILRIC": "fas fa-user fa-7x", "EDUC": "fas fa-book-reader fa-7x", "VETCS": "fas fa-dog fa-7x", "ELSO": "fas fa-sign-language fa-7x", "BIOAP": "fas fa-dog fa-7x", "LA": "fas fa-mountain fa-7x", "ROMS": "fas fa-language fa-7x", "ZULU": "fas fa-language fa-7x", "ARCH": "fas fa-monument fa-7x", "CZECH": "fas fa-language fa-7x", "SWAHL": "fas fa-language fa-7x", "PALI": "fas fa-language fa-7x", "VISST": "fas fa-tv fa-7x", "ENGL": "fas fa-language fa-7x", "VTMED": "fas fa-dog fa-7x", "THAI": "fas fa-language fa-7x", "ECE": "fas fa-microchip fa-7x", "LSP": "fas fa-language fa-7x", "HIST": "fas fa-history fa-7x", "SOC": "fas fa-democrat fa-7x", "DEA": "fas fa-biohazard fa-7x", "PERSN": "fas fa-language fa-7x", "HD": "fas fa-baby fa-7x", "STS": "fas fa-microscope fa-7x", "NSE": "fas fa-biohazard fa-7x", "AIIS": "fas fa-language fa-7x", "ORIE": "fas fa-bezier-curve fa-7x", "NAVS": "fas fa-water fa-7x", "SHUM": "fas fa-user-alt fa-7x", "ENGRI": "fas fa-cogs fa-7x", "FSAD": "fab fa-pied-piper-hat fa-7x", "FDSC": "fas fa-utensils fa-7x", "ASTRO": "fas fa-meteor fa-7x", "VTBMS": "fas fa-dog fa-7x", "PLPPM": "fab fa-canadian-maple-leaf fa-7x", "JAPAN": "fas fa-language fa-7x", "PADM": "fas fa-bus fa-7x", "ILRID": "fas fa-user fa-7x", "PLBRG": "fas fa-seedling fa-7x", "NEPAL": "fas fa-language fa-7x", "CLASS": "fas fa-globe fa-7x", "BURM": "fas fa-language fa-7x", "CHEM": "fas fa-flask fa-7x", "MGMT": "fas fa-graduation-cap fa-7x", "JWST": "fas fa-hanukiah fa-7x", "HEBRW": "fas fa-language fa-7x", "PLSCS": "fas fa-seedling fa-7x", "FREN": "fas fa-language fa-7x", "LEAD": "fas fa-fist-raised fa-7x", "ILRST": "fas fa-user fa-7x", "ASIAN": "fas fa-globe-asia fa-7x", "ASRC": "fas fa-globe-africa fa-7x", "STSCI": "fas fa-superscript fa-7x", "TAG": "fas fa-language fa-7x", "ALS": "fas fa-tractor fa-7x", "BPRE": "fas fa-building fa-7x", "BME": "fas fa-pills fa-7x", "ILROB": "fas fa-calendar-alt fa-7x", "TAMIL": "fas fa-language fa-7x", "TURK": "fas fa-language fa-7x", "ANTHR": "fas fa-user fa-7x", "AAS": "fas fa-globe-asia fa-7x", "PHYS": "fas fa-atom fa-7x", "CHLIT": "fas fa-language fa-7x", "JPLIT": "fas fa-language fa-7x", "YORUB": "fas fa-language fa-7x", "BIONB": "fas fa-brain fa-7x", "URDU": "fas fa-language fa-7x", "MUSIC": "fas fa-music fa-7x", "VETMI": "fas fa-dog fa-7x", "EAS": "fas fa-globe fa-7x"};
           return majorToIconMapping[dept];
         }
         // Creates a div to hold everything to do with a recommenation
@@ -203,7 +206,7 @@
           }
 
           description_txt = document.createElement("div");
-          description_txt.className = "course-description more";
+          description_txt.className = "course-description moreDesc";
           description_txt.innerHTML = description;
 
           right_container.appendChild(description_txt);
@@ -215,7 +218,7 @@
 
           // Second child div
           course_result_metadata_div = document.createElement("div");
-          course_result_metadata_div.className = "course-result-metadata-div more-toggle";
+          course_result_metadata_div.className = "course-result-metadata-div moreMeta";
 
           // Professor
           professor_txt = document.createElement("p");
@@ -223,7 +226,7 @@
             professor = "No professor information available."
           }
 
-          professor_txt.innerHTML = 'Professor' + '<br>' + professor[0];
+          professor_txt.innerHTML = 'Professor: ' + '<br>' + professor[0];
           course_result_metadata_div.appendChild(professor_txt);
 
           // Rating
@@ -256,9 +259,9 @@
          } 
          course_result_metadata_div.appendChild(course_prerequisite_txt);
 
-          // Add two child divs to parent div
-          course_result_information_div.appendChild(course_result_metadata_div);
+          // Add two child divs to parent div          
           course_result.appendChild(course_result_information_div);
+          course_result.appendChild(course_result_metadata_div);
           return course_result;
         }
 
@@ -275,6 +278,11 @@
           var slider_value = custom_handle.style.left;
           slider_value = slider_value.substring(0, slider_value.length - 1);
           
+          var advanced_search_display = document.getElementById("advanced-search-options").style.display;
+          if (advanced_search_display == "none" || !advanced_search_display) {
+            slider_value = 50;
+          }
+          console.log(advanced_search_display);
           console.log(slider_value);
 
           $.ajax({
@@ -305,10 +313,10 @@
 
         function readMore() {
           var showChar = 100;
-          var ellipsestext = "...";
-          var moretext = "more";
-          var lesstext = "less";
-          $('.more').each(function() {
+          var ellipsestext = " ...";
+          var moretext = " more";
+          var lesstext = " less";
+          $('.moreDesc').each(function() {
           var content = $(this).html();
 
           if(content.length > showChar) {
@@ -316,14 +324,37 @@
             var c = content.substr(0, showChar);
             var h = content.substr(showChar);
 
-            var html = c + '<span class="moreelipses">'+ellipsestext+'</span><span class="morecontent"><span>' + h + '</span><a href="" class="morelink">'+moretext+'</a></span>';
+            var html = c + '<span class="moreelipses">'+ellipsestext+'</span><span class="moreDesccontent"><span>' + h + '</span><a href="" class="moreDesclink">'+moretext+'</a></span>';
 
             $(this).html(html);
           }
 
           });
 
-          $(".morelink").click(function(){
+          $('.moreMeta').each(function() {
+          var content = $(this).html();
+          split_content = content.split("</p>")
+          var c = split_content.slice(0, 2).join("</p>") + "</p>";
+          var h = split_content.slice(2).join("</p>") + "</p>";
+
+          var html = c + '<span class="moreelipses">'+ellipsestext+'</span><span class="moreMetacontent"><span>' + h + '</span><a href="" class="moreMetalink">'+moretext+'</a></span>';
+          $(this).html(html);
+          });
+
+          $(".moreDesclink").click(function(){
+            if($(this).hasClass("less")) {
+              $(this).removeClass("less");
+              $(this).html(moretext);
+            } else {
+              $(this).addClass("less");
+              $(this).html(lesstext);
+            }
+            $(this).parent().prev().toggle();
+            $(this).prev().toggle();
+            return false;
+          });
+
+          $(".moreMetalink").click(function(){
             if($(this).hasClass("less")) {
               $(this).removeClass("less");
               $(this).html(moretext);

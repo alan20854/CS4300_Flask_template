@@ -30,11 +30,11 @@ course_numbers_to_description_map_for_all_majors = {}
 for dept in all_majors:
     for course in cornell_course_descriptions[dept]:
         #print("LALALALA", course['description'])
-        
+       #print(course.keys())
         course_numbers_to_description_map_for_all_majors[dept + ' ' + course['courseNumber']] = {'desc': course['description'], 
-        'prof': course['professor'], 'url': course['url'], 'prerequisite': course['prerequisite'], 'offered': course['offered'], 'length': course['courseLength'],
+        'prof': course['professor'], 'url': course['url'], 'prerequisite': course['prerequisite'], 'offered': course['offered'], 'courseLength': course['courseLength'],
         'title': course['courseTitle']}
-        #print('LOLOL', course_numbers_to_description_map_for_all_majors[dept + ' ' + course['courseNumber']]['desc'])
+        #print('LOLOLLLL', course_numbers_to_description_map_for_all_majors[dept + ' ' + course['courseNumber']]['courseLength'])
 
 
 
