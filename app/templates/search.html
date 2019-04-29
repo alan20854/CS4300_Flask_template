@@ -88,7 +88,6 @@
 
         function showAdvancedSearch() {
           var advanced_search = document.getElementById("advanced-search-options");
-          console.log(advanced_search.style.display);
             if (advanced_search.style.display == "none" || !advanced_search.style.display) {
               advanced_search.style.display = "block";
             } else {
@@ -164,7 +163,6 @@
         }
         // Creates a div to hold everything to do with a recommenation
         function createRecommendationComponent(recommendation) {
-          console.log("RECOMMENDATOIN", recommendation);
           let course = recommendation.course;
           let description = recommendation.description;
           let title = recommendation.title;
@@ -245,12 +243,6 @@
           course_offered_txt.innerHTML = 'Course offered in: ' + offered;
           course_result_metadata_div.appendChild(course_offered_txt);
 
-          // length
-          course_length_txt = document.createElement("p");
-          course_length_txt.className = "other-text";
-          course_length_txt.innerHTML = 'Course is: ' + length + ' weeks';
-          course_result_metadata_div.appendChild(course_length_txt);
-
           // prerequisite
          course_prerequisite_txt = document.createElement("p");
          course_prerequisite_txt.className = "other-text";
@@ -285,8 +277,6 @@
           if (advanced_search_display == "none" || !advanced_search_display) {
             slider_value = 50;
           }
-          console.log(advanced_search_display);
-          console.log(slider_value);
 
           $.ajax({
                     url: '/search',
