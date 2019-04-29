@@ -120,4 +120,21 @@ def recommend_classes_for_class(list_class_ids, tag_list):
     random.Random(1).shuffle(final_ranking)
     return final_ranking
 
+def apply_slider_priority(priority, course_recommendations, tag_recommendations):
+    num_recommendations = min(10, len(course_recommendations + tag_recommendations))
+    final_recommendations = []
+    for i in range(num_recommendations):
+        choice = random.choices([0,1], [100-priority, priority])
+        if choice == 1:
+            try:
+                final_recommendations.append(tag_recommendations.pop(0))
+            except:
+                final_recommendations.append(course_recommendations.pop(0))
+        else: 
+            try:
+                final_recommendations.append(course_recommendations.pop(0))
+            except:
+                final_recommendations.append(tag_recommendations.pop(0))               
+
+    return final_recommendations
 # print(recommend_classes_for_class(['CS 3110'], ['programming', 'statistics']))

@@ -85,6 +85,7 @@ if __name__ == "__main__":
             prof_ratings[name] = float(prof['overall_rating'])
         except:
             prof_ratings[name] = None
+    # print(prof_ratings['Daisy Fan'])
     pickle.dump(prof_ratings, open('prof_ratings.p', "wb"))
 
     #print(CornellUniversity.professorlist[0])
