@@ -99,21 +99,13 @@
         var classes = new Bloodhound({
           datumTokenizer: Bloodhound.tokenizers.obj.whitespace('class_name'),
           queryTokenizer: Bloodhound.tokenizers.whitespace,
-          // prefetch: {
-          //   url: 'static/classes_typeahead.json',
-          //   filter: function(list) {
-          //   return list.classes;
-          //   }
-          // }
-          remote: {
-                   url: '/static/classes_typeahead.json',
-                   prepare: function (query, settings) {
-                      settings.type = "POST";
-                      settings.contentType = "application/json; charset=UTF-8";
-                      settings.data = JSON.stringify(query);
-                      return settings;
-                   }
+          prefetch: {
+            url: 'static/classes_typeahead.json',
+            filter: function(list) {
+            return list.classes;
+            }
           }
+          
         });
 
         classes.clearPrefetchCache();
@@ -138,20 +130,11 @@
         var tags = new Bloodhound({
           datumTokenizer: Bloodhound.tokenizers.obj.whitespace('tag'),
           queryTokenizer: Bloodhound.tokenizers.whitespace,
-          // prefetch: {
-          //   url: 'static/tags_typeahead.json',
-          //   filter: function(list) {
-          //   return list.tags;
-          //   }
-          // }
-          remote: {
-                   url: '/static/tags_typeahead.json',
-                   prepare: function (query, settings) {
-                      settings.type = "POST";
-                      settings.contentType = "application/json; charset=UTF-8";
-                      settings.data = JSON.stringify(query);
-                      return settings;
-                   }
+          prefetch: {
+            url: 'static/tags_typeahead.json',
+            filter: function(list) {
+            return list.tags;
+            }
           }
         });
 
