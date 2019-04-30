@@ -161,13 +161,9 @@ def get_prereq(course_info, course_codes ,depth=10):
     if len(tokens) > 0 and depth > 0:
         for i in range(len(tokens) - 1): 
             bigram = tokens[i] + " " + tokens[i + 1]
-            # print(bigram)
             if bigram in master_course_codes_list:
                 prereqs.append(bigram)
             
-        # print(prereqs)
-        # print("************")
-        # print(preprocess_class_ids(prereqs, cornell_course_descriptions))
         for course_id in preprocess_class_ids(prereqs, cornell_course_descriptions):
             if course_id not in prereqs:
                 prereqs+= get_prereq(course_numbers_to_description_map_for_all_majors[course_id], course_codes, depth-1)
@@ -198,8 +194,4 @@ def filter_top_20(input_lst, course_codes):
         
     return top_20_codes
 
-for key, value in recommend_classes_for_class(['CS 4786'], ['statistics'], 0.0):
-    print(key)
-    print(value)
-    print("**************************************")
-# print(recommend_classes_for_class(['CS 3110'], ['statistics'], 0.0))
+
