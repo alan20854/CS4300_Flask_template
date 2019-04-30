@@ -44,6 +44,7 @@ def search():
 			class_dict["length"] = v['courseLength']
 			class_dict["url"] = v['url']
 			class_dict["prerequisite"] = v['prerequisite']
+			class_dict["crosslisted"] = v['crosslisted']
 			json_dict['recommendations'].append(class_dict)
 		return(json.dumps(json_dict))
 
