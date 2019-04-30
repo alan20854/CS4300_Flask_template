@@ -112,10 +112,6 @@ def recommend_classes_for_class(list_class_ids, tag_list, ratio):
     for courseid, course_info in top_10_results_with_descriptions: 
         for key, value in course_info.items():
             course_info[key] = value
-            regex = re.compile('[^a-zA-Z0-9]')
-            if isinstance(value, str):
-                value = regex.sub(' ', value)
-                course_info[key] = value
         
         if course_info['prof'] != None and len(course_info['prof']) > 0:
             try: 
