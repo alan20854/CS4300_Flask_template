@@ -129,7 +129,7 @@ def recommend_classes_for_class(list_class_ids, tag_list, ratio):
                 instructor_rating = 3
             rank_by_rating.append((courseid, course_info, instructor_rating))
     final_ranking = [(similar_class, info) for similar_class, info,_ in rank_by_rating]
-
+    
     return final_ranking
 
 # Priority 0 is all classes, and priority 1.0 is all tags
