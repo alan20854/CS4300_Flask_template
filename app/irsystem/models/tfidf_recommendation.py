@@ -15,14 +15,14 @@ def ascii_encode_dict(data):
     ascii_encode = lambda x: x.encode('ascii')
     return dict(map(ascii_encode, pair) for pair in data.items())
 
-vectorizer = pkl.load(open("../../../app/irsystem/models/vectorizer.pkl", "rb"))
-X = pkl.load(open("../../../app/irsystem/models/tdm.pkl", "rb"))
-course_codes  = pkl.load(open("../../../app/irsystem/models/course_codes.pkl", "rb"))
-master_course_codes_list =  pkl.load(open("../../../data/courseroster/course_codes_II.pkl", "rb"))
-prof_ratings = pkl.load(open('../../../data/ratemyprofessor/prof_ratings.p', 'rb'))
+vectorizer = pkl.load(open("./app/irsystem/models/vectorizer.pkl", "rb"))
+X = pkl.load(open("./app/irsystem/models/tdm.pkl", "rb"))
+course_codes  = pkl.load(open("./app/irsystem/models/course_codes.pkl", "rb"))
+master_course_codes_list =  pkl.load(open("./data/courseroster/course_codes_II.pkl", "rb"))
+prof_ratings = pkl.load(open('./data/ratemyprofessor/prof_ratings.p', 'rb'))
 
 
-with open("../../../data/courseroster/full_json.json", encoding='utf-8') as f:
+with open("./data/courseroster/full_json.json", encoding='utf-8') as f:
     cornell_course_descriptions = json.load(f)
 
 all_majors = list(cornell_course_descriptions.keys())
@@ -198,8 +198,8 @@ def filter_top_20(input_lst, course_codes):
         
     return top_20_codes
 
-# for key, value in recommend_classes_for_class(['CS 4780'], ['statistics'], 0.0):
-#     print(key)
-#     print(value)
-#     print("**************************************")
+for key, value in recommend_classes_for_class(['CS 4786'], ['statistics'], 0.0):
+    print(key)
+    print(value)
+    print("**************************************")
 # print(recommend_classes_for_class(['CS 3110'], ['statistics'], 0.0))
