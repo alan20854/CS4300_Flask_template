@@ -15,14 +15,14 @@ def ascii_encode_dict(data):
     ascii_encode = lambda x: x.encode('ascii')
     return dict(map(ascii_encode, pair) for pair in data.items())
 
-vectorizer = pkl.load(open("./app/irsystem/models/vectorizer.pkl", "rb"))
-X = pkl.load(open("./app/irsystem/models/tdm.pkl", "rb"))
-course_codes  = pkl.load(open("./app/irsystem/models/course_codes.pkl", "rb"))
-master_course_codes_list =  pkl.load(open("./data/courseroster/course_codes_II.pkl", "rb"))
-prof_ratings = pkl.load(open('./data/ratemyprofessor/prof_ratings.p', 'rb'))
+vectorizer = pkl.load(open("../../../app/irsystem/models/vectorizer.pkl", "rb"))
+X = pkl.load(open("../../../app/irsystem/models/tdm.pkl", "rb"))
+course_codes  = pkl.load(open("../../../app/irsystem/models/course_codes.pkl", "rb"))
+master_course_codes_list =  pkl.load(open("../../../data/courseroster/course_codes_II.pkl", "rb"))
+prof_ratings = pkl.load(open('../../../data/ratemyprofessor/prof_ratings.p', 'rb'))
 
 
-with open("./data/courseroster/full_json.json", encoding='utf-8') as f:
+with open("../../../data/courseroster/full_json.json", encoding='utf-8') as f:
     cornell_course_descriptions = json.load(f)
 
 all_majors = list(cornell_course_descriptions.keys())
@@ -150,14 +150,15 @@ def apply_slider_priority(priority, course_recommendations, tag_recommendations)
 
     return final_recommendations
 
-def get_prereq(course_info, course_codes):
+def get_prereq(course_info, course_codes ,depth=10):
     sentence = course_info['prerequisite']
     regex = re.compile('[\W]')
     sentence = regex.sub(' ', sentence)
 
     prereqs = []
     tokens = sentence.split(' ')
-    if len(tokens) > 0:
+    
+    if len(tokens) > 0 and depth > 0:
         for i in range(len(tokens) - 1): 
             bigram = tokens[i] + " " + tokens[i + 1]
             # print(bigram)
@@ -169,7 +170,7 @@ def get_prereq(course_info, course_codes):
         # print(preprocess_class_ids(prereqs, cornell_course_descriptions))
         for course_id in preprocess_class_ids(prereqs, cornell_course_descriptions):
             if course_id not in prereqs:
-                prereqs+= get_prereq(course_numbers_to_description_map_for_all_majors[course_id], course_codes)
+                prereqs+= get_prereq(course_numbers_to_description_map_for_all_majors[course_id], course_codes, depth-1)
     
     return prereqs
 
@@ -197,7 +198,7 @@ def filter_top_20(input_lst, course_codes):
         
     return top_20_codes
 
-# for key, value in recommend_classes_for_class(['CS 4820'], ['statistics'], 0.0):
+# for key, value in recommend_classes_for_class(['CS 4780'], ['statistics'], 0.0):
 #     print(key)
 #     print(value)
 #     print("**************************************")
