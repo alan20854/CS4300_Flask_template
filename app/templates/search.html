@@ -105,6 +105,7 @@
             return list.classes;
             }
           }
+          
         });
 
         classes.clearPrefetchCache();
@@ -176,7 +177,6 @@
           let crosslisted_courses = recommendation.crosslisted;
           let courseDept = course.split(' ')[0];
 
-          console.log(recommendation);
 
           // Main div
           course_result = document.createElement("div");
@@ -309,8 +309,7 @@
                         
                       $("#results").append(results);
                       readMore()
-                      
-
+          
                     },
                     error: function(error) {
                       console.log("ERROR");
