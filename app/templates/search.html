@@ -99,11 +99,20 @@
         var classes = new Bloodhound({
           datumTokenizer: Bloodhound.tokenizers.obj.whitespace('class_name'),
           queryTokenizer: Bloodhound.tokenizers.whitespace,
-          prefetch: {
-            url: 'static/classes_typeahead.json',
-            filter: function(list) {
-            return list.classes;
-            }
+          // prefetch: {
+          //   url: 'static/classes_typeahead.json',
+          //   filter: function(list) {
+          //   return list.classes;
+          //   }
+          // }
+          remote: {
+                   url: '/static/classes_typeahead.json',
+                   prepare: function (query, settings) {
+                      settings.type = "POST";
+                      settings.contentType = "application/json; charset=UTF-8";
+                      settings.data = JSON.stringify(query);
+                      return settings;
+                   }
           }
         });
 
@@ -185,7 +194,6 @@
           let crosslisted_courses = recommendation.crosslisted;
           let courseDept = course.split(' ')[0];
 
-          console.log(recommendation);
 
           // Main div
           course_result = document.createElement("div");
@@ -318,8 +326,7 @@
                         
                       $("#results").append(results);
                       readMore()
-                      
-
+          
                     },
                     error: function(error) {
                       console.log("ERROR");
