@@ -242,7 +242,11 @@
           // offered
           course_offered_txt = document.createElement("p");
           course_offered_txt.className = "other-text";
-          offered = offered.join(', ');
+          if (offered == undefined || !offered) {
+            offered = "N/A";
+          } else {
+            offered = offered.join(', ');
+          }
           course_offered_txt.innerHTML = 'Course offered in: ' + offered;
           course_result_metadata_div.appendChild(course_offered_txt);
 
